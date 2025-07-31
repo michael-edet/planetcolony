@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer Network | Planet Colony Music Promotion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Influencer Network Specific Styles */
+        .influencer-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .influencer-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .influencer-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .network-intro {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        
+        .network-intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .platform-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background-color: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-color: var(--accent-green);
+        }
+        
+        .influencers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .influencer-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .influencer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(29, 185, 84, 0.1);
+        }
+        
+        .influencer-avatar {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .influencer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .influencer-card:hover .influencer-avatar img {
+            transform: scale(1.05);
+        }
+        
+        .platform-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .platform-badge.youtube {
+            color: #FF0000;
+        }
+        
+        .platform-badge.instagram {
+            color: #E1306C;
+        }
+        
+        .platform-badge.tiktok {
+            color: #000000;
+        }
+        
+        .platform-badge.twitch {
+            color: #9146FF;
+        }
+        
+        .influencer-info {
+            padding: 25px;
+        }
+        
+        .influencer-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: var(--primary-black);
+        }
+        
+        .influencer-category {
+            display: inline-block;
+            background-color: var(--light-gray);
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .influencer-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .influencer-bio {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .network-stats {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+            margin: 60px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            margin-bottom: 20px;
+        }
+        
+        .stat-card .stat-number {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 1rem;
+            color: #555;
+        }
+        
+        .case-studies {
+            margin: 80px 0;
+        }
+        
+        .case-study-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .case-study-image {
+            flex: 1;
+            min-width: 300px;
+            height: 350px;
+        }
+        
+        .case-study-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .case-study-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+        }
+        
+        .case-study-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-black);
+        }
+        
+        .case-study-content .results {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+        }
+        
+        .result-item .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+        
+        .result-item .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .testimonials-section {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 80px 0;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: #222;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--accent-green);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 25px;
+            color: #ddd;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .influencer-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .case-study-card {
+                flex-direction: column;
+            }
+            
+            .case-study-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (Same as your main page) -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                    <li><a href="promotion.html">Promotion</a></li>
+                    <li><a href="#">Technology</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu (Same as your main page) -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="entertainment.html"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="promotion.html"><i class="fas fa-bullhorn"></i> Promotion</a></li>
+                <li><a href="#"><i class="fas fa-microchip"></i> Technology</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="influencer-hero">
+        <div class="container influencer-hero-content">
+            <h1>Our Influencer Network</h1>
+            <p>Connect with top music influencers across multiple platforms to amplify your reach and engagement</p>
+            <a href="#influencers" class="btn">Explore Influencers</a>
+        </div>
+    </section>
+
+    <!-- Network Intro -->
+    <section class="section">
+        <div class="container">
+            <div class="network-intro">
+                <h2 class="section-title">Premium Music Influencer Network</h2>
+                <p>Planet Colony has cultivated relationships with hundreds of influential content creators across YouTube, Instagram, TikTok, Twitch, and more. Our network specializes in music promotion, with creators who have proven track records of breaking new artists and songs.</p>
+            </div>
+            
+            <!-- Platform Filter -->
+            <div class="platform-filter">
+                <button class="filter-btn active" data-platform="all">All Platforms</button>
+                <button class="filter-btn" data-platform="youtube">YouTube</button>
+                <button class="filter-btn" data-platform="instagram">Instagram</button>
+                <button class="filter-btn" data-platform="tiktok">TikTok</button>
+                <button class="filter-btn" data-platform="twitch">Twitch</button>
+            </div>
+            
+            <!-- Influencers Grid -->
+            <div class="influencers-grid" id="influencers">
+                <!-- YouTube Influencer -->
+                <div class="influencer-card" data-platform="youtube">
+                    <div class="influencer-avatar">
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Music Vibes Channel">
+                        <div class="platform-badge youtube">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                    </div>
+                    <div class="influencer-info">
+                        <h3>Music Vibes</h3>
+                        <span class="influencer-category">Music Reviews & Reactions</span>
+                        <div class="influencer-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">2.4M</div>
+                                <div class="stat-label">Subscribers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">85M</div>
+                                <div class="stat-label">Views</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">12%</div>
+                                <div class="stat-label">Engagement</div>
+                            </div>
+                        </div>
+                        <p class="influencer-bio">Specializing in in-depth music reviews and reaction videos. Known for breaking new indie artists and providing valuable feedback.</p>
+                        <a href="#" class="btn btn-small">View Channel</a>
+                    </div>
+                </div>
+                
+                <!-- Instagram Influencer -->
+                <div class="influencer-card" data-platform="instagram">
+                    <div class="influencer-avatar">
+                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="HipHop Daily">
+                        <div class="platform-badge instagram">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                    <div class="influencer-info">
+                        <h3>HipHop Daily</h3>
+                        <span class="influencer-category">Hip-Hop Culture</span>
+                        <div class="influencer-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">1.8M</div>
+                                <div class="stat-label">Followers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">8.5%</div>
+                                <div class="stat-label">Engagement</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">42K</div>
+                                <div class="stat-label">Avg. Likes</div>
+                            </div>
+                        </div>
+                        <p class="influencer-bio">Premier destination for hip-hop news, music premieres, and artist spotlights. Regularly features underground talent.</p>
+                        <a href="#" class="btn btn-small">View Profile</a>
+                    </div>
+                </div>
+                
+                <!-- TikTok Influencer -->
+                <div class="influencer-card" data-platform="tiktok">
+                    <div class="influencer-avatar">
+                        <img src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Dance Challenges">
+                        <div class="platform-badge tiktok">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                    </div>
+                    <div class="influencer-info">
+                        <h3>Dance Challenges</h3>
+                        <span class="influencer-category">Viral Dance Trends</span>
+                        <div class="influencer-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">5.2M</div>
+                                <div class="stat-label">Followers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">32M</div>
+                                <div class="stat-label">Likes</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">15%</div>
+                                <div class="stat-label">Engagement</div>
+                            </div>
+                        </div>
+                        <p class="influencer-bio">Creates viral dance challenges that have launched multiple songs into the charts. Specializes in pop and hip-hop tracks.</p>
+                        <a href="#" class="btn btn-small">View Profile</a>
+                    </div>
+                </div>
+                
+                <!-- Twitch Influencer -->
+                <div class="influencer-card" data-platform="twitch">
+                    <div class="influencer-avatar">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Gaming Beats">
+                        <div class="platform-badge twitch">
+                            <i class="fab fa-twitch"></i>
+                        </div>
+                    </div>
+                    <div class="influencer-info">
+                        <h3>Gaming Beats</h3>
+                        <span class="influencer-category">Gaming Music</span>
+                        <div class="influencer-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">420K</div>
+                                <div class="stat-label">Followers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">15K</div>
+                                <div class="stat-label">Avg. Viewers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">82%</div>
+                                <div class="stat-label">Retention</div>
+                            </div>
+                        </div>
+                        <p class="influencer-bio">Streams gaming content with curated music playlists. Excellent for electronic and hip-hop artists looking for gaming audiences.</p>
+                        <a href="#" class="btn btn-small">View Channel</a>
+                    </div>
+                </div>
+                
+                <!-- YouTube Influencer 2 -->
+                <div class="influencer-card" data-platform="youtube">
+                    <div class="influencer-avatar">
+                        <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Indie Discoveries">
+                        <div class="platform-badge youtube">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                    </div>
+                    <div class="influencer-info">
+                        <h3>Indie Discoveries</h3>
+                        <span class="influencer-category">Indie Music Promotion</span>
+                        <div class="influencer-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">850K</div>
+                                <div class="stat-label">Subscribers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">42M</div>
+                                <div class="stat-label">Views</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">14%</div>
+                                <div class="stat-label">Engagement</div>
+                            </div>
+                        </div>
+                        <p class="influencer-bio">Weekly showcases of the best new indie music across all genres. Has helped launch careers of multiple breakthrough artists.</p>
+                        <a href="#" class="btn btn-small">View Channel</a>
+                    </div>
+                </div>
+                
+                <!-- TikTok Influencer 2 -->
+                <div class="influencer-card" data-platform="tiktok">
+                    <div class="influencer-avatar">
+                        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Song Snippets">
+                        <div class="platform-badge tiktok">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                    </div>
+                    <div class="influencer-info">
+                        <h3>Song Snippets</h3>
+                        <span class="influencer-category">Music Discovery</span>
+                        <div class="influencer-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">3.7M</div>
+                                <div class="stat-label">Followers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">28M</div>
+                                <div class="stat-label">Likes</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">18%</div>
+                                <div class="stat-label">Engagement</div>
+                            </div>
+                        </div>
+                        <p class="influencer-bio">Specializes in 15-30 second song snippets that often go viral. Perfect for hook-driven tracks looking for quick exposure.</p>
+                        <a href="#" class="btn btn-small">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Network Stats -->
+    <section class="network-stats">
+        <div class="container">
+            <h2 class="section-title">Our Network by Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">250+</div>
+                    <div class="stat-label">Verified Influencers</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-number">85M+</div>
+                    <div class="stat-label">Combined Followers</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-number">12.5%</div>
+                    <div class="stat-label">Avg. Engagement Rate</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Artists Promoted</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="section case-studies">
+        <div class="container">
+            <h2 class="section-title">Success Stories</h2>
+            <p class="network-intro">See how we've helped artists grow through strategic influencer partnerships</p>
+            
+            <div class="case-study-card">
+                <div class="case-study-image">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Artist Case Study">
+                </div>
+                <div class="case-study-content">
+                    <h3>Breaking Nova Wave</h3>
+                    <p>How we helped electronic artist Nova Wave gain 250,000 monthly listeners through strategic influencer placements across YouTube and TikTok.</p>
+                    <p>Our team identified key influencers in the electronic music space and coordinated a campaign featuring reaction videos, dance challenges, and behind-the-scenes content.</p>
+                    <div class="results">
+                        <div class="result-item">
+                            <div class="number">250K</div>
+                            <div class="label">New Monthly Listeners</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="number">15</div>
+                            <div class="label">Influencer Placements</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="number">3.2M</div>
+                            <div class="label">Total Impressions</div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Read Full Case Study</a>
+                </div>
+            </div>
+            
+            <div class="case-study-card">
+                <div class="case-study-image">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Artist Case Study">
+                </div>
+                <div class="case-study-content">
+                    <h3>Viral Hip-Hop Campaign</h3>
+                    <p>How we took underground hip-hop artist Lexicon from 5,000 to 500,000 followers in 3 months through viral TikTok challenges.</p>
+                    <p>Our team developed a custom dance challenge that spread across TikTok, with participation from 42 influencers in our network. The campaign generated over 50,000 user-generated videos.</p>
+                    <div class="results">
+                        <div class="result-item">
+                            <div class="number">495K</div>
+                            <div class="label">New Followers</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="number">42</div>
+                            <div class="label">Influencers Participated</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="number">50K+</div>
+                            <div class="label">User Videos Created</div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Read Full Case Study</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Artists Say</h2>
+            <p class="network-intro" style="color: #ccc;">Hear from artists who've grown through our influencer network</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Working with Planet Colony's influencer network completely changed my career. The exposure I got from just three YouTube placements led to my first record deal."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah K.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah K.</h4>
+                            <p>Electronic Artist</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The TikTok campaign Planet Colony ran for my single resulted in over 100,000 streams in the first week. Their network of influencers is incredibly effective."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David M.">
+                        </div>
+                        <div class="author-info">
+                            <h4>David M.</h4>
+                            <p>Hip-Hop Artist</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"As an indie artist, I never thought I could get this level of exposure. Planet Colony connected me with influencers who genuinely loved my music and shared it with their audiences."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aisha B.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Aisha B.</h4>
+                            <p>Singer-Songwriter</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Amplify Your Music?</h2>
+            <p>Join hundreds of artists who've grown their audience through our premium influencer network.</p>
+            <a href="#" class="btn">Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- Footer (Same as your main page) -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in entertainment, news, and technology since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="entertainment.html"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="promotion.html"><i class="fas fa-chevron-right"></i> Promotion</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Portfolio</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gaming Hub</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Podcast Network</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Streaming Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dev Tools</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile Apps</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle (Same as your main page)
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Platform filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const influencerCards = document.querySelectorAll('.influencer-card');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Get platform from data attribute
+                const platform = this.getAttribute('data-platform');
+                
+                // Filter influencer cards
+                influencerCards.forEach(card => {
+                    if (platform === 'all' || card.getAttribute('data-platform') === platform) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+        
+        // Animated stats counter
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const statsSection = document.querySelector('.network-stats');
+        
+        function animateStats() {
+            const rect = statsSection.getBoundingClientRect();
+            const isVisible = (rect.top <= window.innerHeight * 0.75) && 
+                              (rect.bottom >= window.innerHeight * 0.25);
+            
+            if (isVisible) {
+                statNumbers.forEach(number => {
+                    const target = parseInt(number.textContent.replace(/[+,]/g, ''));
+                    const suffix = number.textContent.match(/[+,]/g) ? number.textContent.match(/[+,]/g)[0] : '';
+                    const duration = 2000; // Animation duration in ms
+                    const start = 0;
+                    const increment = target / (duration / 16); // 60fps
+                    
+                    let current = start;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            clearInterval(timer);
+                            current = target;
+                        }
+                        number.textContent = Math.floor(current).toLocaleString() + suffix;
+                    }, 16);
+                });
+                
+                // Remove event listener after animation
+                window.removeEventListener('scroll', animateStats);
+            }
+        }
+        
+        // Run animation when stats section is in view
+        window.addEventListener('scroll', animateStats);
+    </script>
+</body>
+</html>

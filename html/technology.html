@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Hub | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --header-height: 80px;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: var(--header-height);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 181, 84, 0.3);
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            height: var(--header-height);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-black);
+        }
+        
+        .logo span {
+            color: var(--accent-green);
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            margin-right: 30px;
+        }
+        
+        .nav-list li {
+            margin: 0 15px;
+        }
+        
+        .nav-list a {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-green);
+            transition: width 0.3s;
+        }
+        
+        .nav-list a:hover {
+            color: var(--accent-green);
+        }
+        
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-black);
+        }
+        
+        .portfolio-menu {
+            position: relative;
+        }
+        
+        .portfolio-btn {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .portfolio-btn:hover {
+            background-color: var(--accent-green);
+        }
+        
+        .portfolio-btn i {
+            margin-left: 5px;
+        }
+        
+        .portfolio-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .portfolio-menu:hover .portfolio-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .portfolio-dropdown h3 {
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .portfolio-dropdown li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .portfolio-dropdown li:last-child {
+            border-bottom: none;
+        }
+        
+        .portfolio-dropdown a {
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .portfolio-dropdown a:hover {
+            color: var(--accent-green);
+        }
+        
+        .portfolio-dropdown i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--primary-black);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-content {
+            position: relative;
+            height: 100%;
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu ul {
+            margin-top: 50px;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-menu a {
+            color: var(--white);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .mobile-menu a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--accent-green);
+        }
+        
+        .menu-title {
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-green);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1500;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Tech Hero Section */
+        .tech-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1677442135722-5f8ea49cec8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+        }
+        
+        .tech-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .tech-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .tech-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Tech Categories */
+        .tech-categories {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .category-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(29, 185, 84, 0.15);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            color: var(--accent-green);
+            margin-bottom: 25px;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .category-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        /* Featured Tech */
+        .featured-tech {
+            background-color: var(--white);
+        }
+        
+        .featured-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .featured-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .featured-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-tag {
+            display: inline-block;
+            background-color: var(--accent-green);
+            color: var(--white);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .featured-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-black);
+            line-height: 1.3;
+        }
+        
+        .featured-description {
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .tech-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .tech-stat {
+            text-align: center;
+        }
+        
+        .tech-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+        
+        .tech-stat-label {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        /* Innovations Section */
+        .innovations-section {
+            background-color: var(--light-gray);
+        }
+        
+        .innovations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .innovation-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .innovation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .innovation-image {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .innovation-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .innovation-card:hover .innovation-image img {
+            transform: scale(1.05);
+        }
+        
+        .innovation-info {
+            padding: 25px;
+        }
+        
+        .innovation-category {
+            display: inline-block;
+            background-color: var(--light-green);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .innovation-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+            line-height: 1.4;
+        }
+        
+        .innovation-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        /* Events Section */
+        .events-section {
+            background-color: var(--white);
+        }
+        
+        .events-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .events-calendar {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .events-list {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .calendar-header h3 {
+            font-size: 1.4rem;
+            color: var(--primary-black);
+        }
+        
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--accent-green);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            padding: 8px 0;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .calendar-date {
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .calendar-date:hover, .calendar-date.active {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        .calendar-date.event {
+            position: relative;
+        }
+        
+        .calendar-date.event::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+        }
+        
+        .upcoming-events {
+            margin-top: 40px;
+        }
+        
+        .event-item {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--light-gray);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .event-item:hover {
+            background-color: rgba(29, 185, 84, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .event-date {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .event-day {
+            background-color: var(--accent-green);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 15px;
+        }
+        
+        .event-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+        }
+        
+        .event-meta {
+            display: flex;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .event-meta span {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .event-meta i {
+            margin-right: 5px;
+            color: var(--accent-green);
+        }
+        
+        /* Newsletter */
+        .tech-newsletter {
+            background: linear-gradient(135deg, var(--accent-green), var(--dark-green));
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .tech-newsletter .section-title {
+            color: var(--white);
+        }
+        
+        .tech-newsletter .section-title::after {
+            background-color: var(--white);
+        }
+        
+        .tech-newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+        
+        .tech-newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .tech-newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+        }
+        
+        .tech-newsletter-form button {
+            background-color: var(--primary-black);
+            color: var(--white);
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 30px 30px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .tech-newsletter-form button:hover {
+            background-color: #000;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-green);
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .featured-container, .events-container {
+                flex-direction: column;
+            }
+            
+            .featured-image img {
+                min-height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list,
+            .portfolio-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .tech-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .featured-title {
+                font-size: 1.8rem;
+            }
+            
+            .tech-newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tech-newsletter-form input,
+            .tech-newsletter-form button {
+                width: 100%;
+                border-radius: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .tech-hero {
+                height: 50vh;
+            }
+            
+            .tech-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .tech-hero p {
+                font-size: 1rem;
+            }
+            
+            .tech-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="tech.html" class="active">Technology</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="#"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="tech.html" class="active"><i class="fas fa-microchip"></i> Technology</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Community</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Tech Hero Section -->
+    <section class="tech-hero">
+        <div class="container tech-hero-content">
+            <h1>Technology Frontier</h1>
+            <p>Explore the latest innovations, breakthroughs, and advancements shaping our digital future.</p>
+            <a href="#innovations" class="btn">Discover Innovations</a>
+        </div>
+    </section>
+
+    <!-- Tech Categories -->
+    <section class="tech-categories">
+        <div class="container">
+            <h2 class="section-title">Technology Domains</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="category-title">Artificial Intelligence</h3>
+                    <p class="category-description">Explore how AI is transforming industries with machine learning, neural networks, and intelligent systems.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="category-title">Cybersecurity</h3>
+                    <p class="category-description">Protect digital assets with cutting-edge security solutions and threat intelligence.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="category-title">Web Development</h3>
+                    <p class="category-description">Master modern frameworks and tools for building responsive, interactive web applications.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="category-title">Cloud Computing</h3>
+                    <p class="category-description">Leverage scalable cloud infrastructure and services for modern application deployment.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Tech -->
+    <section class="section featured-tech">
+        <div class="container">
+            <div class="featured-container">
+                <div class="featured-content">
+                    <span class="featured-tag">Featured Technology</span>
+                    <h2 class="featured-title">Quantum Computing Breakthrough</h2>
+                    <p class="featured-description">
+                        Researchers at Quantum Labs have achieved quantum supremacy with their new 128-qubit processor, 
+                        solving complex problems in minutes that would take traditional supercomputers centuries. 
+                        This breakthrough opens new possibilities in drug discovery, climate modeling, and cryptography.
+                    </p>
+                    
+                    <div class="tech-stats">
+                        <div class="tech-stat">
+                            <div class="tech-stat-number">128</div>
+                            <div class="tech-stat-label">Qubits</div>
+                        </div>
+                        <div class="tech-stat">
+                            <div class="tech-stat-number">98.7%</div>
+                            <div class="tech-stat-label">Accuracy</div>
+                        </div>
+                        <div class="tech-stat">
+                            <div class="tech-stat-number">100x</div>
+                            <div class="tech-stat-label">Faster</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn">Read Full Report</a>
+                </div>
+                
+                <div class="featured-image">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Quantum Computing">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovations Section -->
+    <section class="section innovations-section" id="innovations">
+        <div class="container">
+            <h2 class="section-title">Latest Innovations</h2>
+            <div class="innovations-grid">
+                <div class="innovation-card">
+                    <div class="innovation-image">
+                        <img src="https://images.unsplash.com/photo-1677442135133-33d364e7d1b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="AI Assistant">
+                    </div>
+                    <div class="innovation-info">
+                        <span class="innovation-category">Artificial Intelligence</span>
+                        <h3 class="innovation-title">Neural Interface for Thought-to-Text Conversion</h3>
+                        <p class="innovation-description">New brain-computer interface translates neural activity into text with 95% accuracy, revolutionizing communication.</p>
+                        <div class="tech-meta">
+                            <span><i class="far fa-clock"></i> 2 days ago</span>
+                            <span><i class="far fa-user"></i> Dr. Elena Rodriguez</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="innovation-image">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Cybersecurity">
+                    </div>
+                    <div class="innovation-info">
+                        <span class="innovation-category">Cybersecurity</span>
+                        <h3 class="innovation-title">Quantum-Resistant Encryption Protocol</h3>
+                        <p class="innovation-description">New cryptographic algorithm protects against quantum computing attacks, securing data for the future.</p>
+                        <div class="tech-meta">
+                            <span><i class="far fa-clock"></i> 4 days ago</span>
+                            <span><i class="far fa-user"></i> CyberSec Team</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="innovation-image">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Web Development">
+                    </div>
+                    <div class="innovation-info">
+                        <span class="innovation-category">Web Development</span>
+                        <h3 class="innovation-title">AI-Powered Code Generation Platform</h3>
+                        <p class="innovation-description">New tool generates production-ready code from natural language descriptions, boosting developer productivity.</p>
+                        <div class="tech-meta">
+                            <span><i class="far fa-clock"></i> 1 week ago</span>
+                            <span><i class="far fa-user"></i> DevTools Inc</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="section events-section">
+        <div class="container">
+            <h2 class="section-title">Tech Events & Conferences</h2>
+            <div class="events-container">
+                <div class="events-calendar">
+                    <div class="calendar-header">
+                        <h3>October 2023</h3>
+                        <div class="calendar-nav">
+                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <div class="calendar-day">Sun</div>
+                        <div class="calendar-day">Mon</div>
+                        <div class="calendar-day">Tue</div>
+                        <div class="calendar-day">Wed</div>
+                        <div class="calendar-day">Thu</div>
+                        <div class="calendar-day">Fri</div>
+                        <div class="calendar-day">Sat</div>
+                        
+                        <!-- Calendar dates would be generated by JavaScript -->
+                        <div class="calendar-date">25</div>
+                        <div class="calendar-date">26</div>
+                        <div class="calendar-date">27</div>
+                        <div class="calendar-date">28</div>
+                        <div class="calendar-date">29</div>
+                        <div class="calendar-date">30</div>
+                        <div class="calendar-date">1</div>
+                        <div class="calendar-date">2</div>
+                        <div class="calendar-date event active">3</div>
+                        <div class="calendar-date">4</div>
+                        <div class="calendar-date">5</div>
+                        <div class="calendar-date">6</div>
+                        <div class="calendar-date">7</div>
+                        <div class="calendar-date">8</div>
+                        <div class="calendar-date">9</div>
+                        <div class="calendar-date event">10</div>
+                        <div class="calendar-date">11</div>
+                        <div class="calendar-date">12</div>
+                        <div class="calendar-date">13</div>
+                        <div class="calendar-date">14</div>
+                        <div class="calendar-date">15</div>
+                        <div class="calendar-date event">16</div>
+                        <div class="calendar-date">17</div>
+                        <div class="calendar-date">18</div>
+                        <div class="calendar-date">19</div>
+                        <div class="calendar-date">20</div>
+                        <div class="calendar-date">21</div>
+                        <div class="calendar-date">22</div>
+                        <div class="calendar-date">23</div>
+                        <div class="calendar-date event">24</div>
+                        <div class="calendar-date">25</div>
+                        <div class="calendar-date">26</div>
+                        <div class="calendar-date">27</div>
+                        <div class="calendar-date">28</div>
+                        <div class="calendar-date">29</div>
+                        <div class="calendar-date">30</div>
+                        <div class="calendar-date">31</div>
+                    </div>
+                    
+                    <div class="upcoming-events">
+                        <h3>Today's Events</h3>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <div class="event-day">3</div>
+                                <div>October 2023 | 10:00 AM</div>
+                            </div>
+                            <h4 class="event-title">Quantum Computing Workshop</h4>
+                            <div class="event-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Virtual Event</span>
+                                <span><i class="fas fa-clock"></i> 3 hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="events-list">
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="event-day">10</div>
+                            <div>October 2023 | 9:00 AM</div>
+                        </div>
+                        <h4 class="event-title">Global AI Summit</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> San Francisco, CA</span>
+                            <span><i class="fas fa-clock"></i> 2 days</span>
+                        </div>
+                    </div>
+                    
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="event-day">16</div>
+                            <div>October 2023 | 1:30 PM</div>
+                        </div>
+                        <h4 class="event-title">Cybersecurity Conference</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> New York, NY</span>
+                            <span><i class="fas fa-clock"></i> 1 day</span>
+                        </div>
+                    </div>
+                    
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="event-day">24</div>
+                            <div>October 2023 | 11:00 AM</div>
+                        </div>
+                        <h4 class="event-title">Future of Web Development</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Austin, TX</span>
+                            <span><i class="fas fa-clock"></i> 3 days</span>
+                        </div>
+                    </div>
+                    
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="event-day">28</div>
+                            <div>October 2023 | 2:00 PM</div>
+                        </div>
+                        <h4 class="event-title">Cloud Infrastructure Expo</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Seattle, WA</span>
+                            <span><i class="fas fa-clock"></i> 2 days</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="tech-newsletter">
+        <div class="container">
+            <h2 class="section-title">Tech Insights Newsletter</h2>
+            <p>Subscribe to receive weekly updates on the latest technology trends, innovations, and exclusive content.</p>
+            <form class="tech-newsletter-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in entertainment, news, and technology since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> News</a></li>
+                        <li><a href="tech.html"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Portfolio</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gaming Hub</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Podcast Network</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Streaming Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dev Tools</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile Apps</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Calendar Navigation
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+        
+        prevMonthBtn.addEventListener('click', () => {
+            alert('Previous month selected. In a real implementation, this would update the calendar view.');
+        });
+        
+        nextMonthBtn.addEventListener('click', () => {
+            alert('Next month selected. In a real implementation, this would update the calendar view.');
+        });
+        
+        // Highlight today in calendar
+        const today = new Date().getDate();
+        const calendarDates = document.querySelectorAll('.calendar-date');
+        calendarDates.forEach(date => {
+            if (parseInt(date.textContent) === today) {
+                date.classList.add('active');
+            }
+        });
+        
+        // Event item click
+        document.querySelectorAll('.event-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const title = item.querySelector('.event-title').textContent;
+                alert(`Registering for event: ${title}`);
+            });
+        });
+        
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.tech-newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const emailInput = newsletterForm.querySelector('input[type="email"]');
+                if (emailInput.value) {
+                    alert(`Thank you for subscribing to our tech newsletter with ${emailInput.value}! You'll receive our next update soon.`);
+                    emailInput.value = '';
+                }
+            });
+        }
+        
+        // Innovation card click
+        document.querySelectorAll('.innovation-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('.innovation-title').textContent;
+                alert(`Opening innovation details: ${title}`);
+            });
+        });
+    </script>
+</body>
+</html>

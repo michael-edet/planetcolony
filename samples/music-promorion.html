@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Strategies | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Promotion Strategies Specific Styles */
+        .strategy-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .strategy-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .strategy-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .strategy-intro {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        
+        .strategy-intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .strategies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .strategy-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .strategy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(29, 185, 84, 0.1);
+        }
+        
+        .strategy-icon {
+            background-color: rgba(29, 185, 84, 0.1);
+            color: var(--accent-green);
+            font-size: 2.5rem;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto 20px;
+        }
+        
+        .strategy-content {
+            padding: 0 30px 30px;
+            text-align: center;
+        }
+        
+        .strategy-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .strategy-content p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        /* Playlists Section */
+        .playlists-section {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+        }
+        
+        .platform-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .platform-tab {
+            padding: 12px 25px;
+            background-color: var(--white);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--medium-gray);
+        }
+        
+        .platform-tab.active, .platform-tab:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-color: var(--accent-green);
+        }
+        
+        .playlists-container {
+            display: none;
+        }
+        
+        .playlists-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .playlists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .playlist-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .playlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .playlist-cover {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .playlist-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .playlist-card:hover .playlist-cover img {
+            transform: scale(1.05);
+        }
+        
+        .playlist-platform {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .playlist-info {
+            padding: 20px;
+        }
+        
+        .playlist-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+        }
+        
+        .playlist-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 15px;
+        }
+        
+        .stats-section {
+            margin: 80px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #555;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .strategy-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .strategies-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (Same as your main page) -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                    <li><a href="#" class="active">Promotion</a></li>
+                    <li><a href="#">Technology</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu (Same as your main page) -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="entertainment.html"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="#" class="active"><i class="fas fa-bullhorn"></i> Promotion</a></li>
+                <li><a href="#"><i class="fas fa-microchip"></i> Technology</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="strategy-hero">
+        <div class="container strategy-hero-content">
+            <h1>Advanced Music Promotion Strategies</h1>
+            <p>Discover how Planet Colony can amplify your music across all platforms with our proven promotion techniques</p>
+            <a href="#strategies" class="btn">Explore Strategies</a>
+        </div>
+    </section>
+
+    <!-- Strategies Section -->
+    <section class="section" id="strategies">
+        <div class="container">
+            <div class="strategy-intro">
+                <h2 class="section-title">Our Promotion Strategies</h2>
+                <p>We employ a multi-faceted approach to music promotion, combining digital marketing, playlist placements, influencer collaborations, and data-driven strategies to maximize your reach and engagement across all platforms.</p>
+            </div>
+            
+            <div class="strategies-grid">
+                <div class="strategy-card">
+                    <div class="strategy-icon">
+                        <i class="fas fa-list-music"></i>
+                    </div>
+                    <div class="strategy-content">
+                        <h3>Playlist Placements</h3>
+                        <p>Get your tracks featured in our extensive network of curated playlists across Spotify, Apple Music, YouTube Music, and more. We own and manage over 200 playlists with millions of combined followers.</p>
+                        <a href="#playlists" class="btn btn-small">View Playlists</a>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="strategy-content">
+                        <h3>Algorithm Optimization</h3>
+                        <p>We analyze streaming algorithms and optimize your releases to maximize platform recommendations, increasing your chances of appearing in Discover Weekly, Release Radar, and other algorithmic playlists.</p>
+                        <a href="#" class="btn btn-small">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="strategy-content">
+                        <h3>Influencer Marketing</h3>
+                        <p>Our network of music influencers and content creators can feature your music in their videos, streams, and social media posts, exposing your sound to engaged, targeted audiences.</p>
+                        <a href="#" class="btn btn-small">See Network</a>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <div class="strategy-content">
+                        <h3>Targeted Advertising</h3>
+                        <p>We run precision ad campaigns on social media and streaming platforms to reach listeners who are most likely to enjoy your music, based on sophisticated audience profiling.</p>
+                        <a href="#" class="btn btn-small">View Case Studies</a>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <div class="strategy-content">
+                        <h3>PR & Media Coverage</h3>
+                        <p>Our PR team secures features in music blogs, magazines, podcasts, and radio stations to build your credibility and reach new audiences through trusted media channels.</p>
+                        <a href="#" class="btn btn-small">See Media Partners</a>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="strategy-content">
+                        <h3>Visual Content Strategy</h3>
+                        <p>We create compelling visual content including lyric videos, visualizers, and behind-the-scenes footage to enhance your online presence and engagement across platforms.</p>
+                        <a href="#" class="btn btn-small">View Portfolio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Playlists Section -->
+    <section class="playlists-section" id="playlists">
+        <div class="container">
+            <h2 class="section-title">Our Playlist Network</h2>
+            <p class="strategy-intro">With over 200 playlists across all major platforms, we can get your music in front of millions of engaged listeners.</p>
+            
+            <div class="platform-tabs">
+                <div class="platform-tab active" data-platform="spotify">Spotify</div>
+                <div class="platform-tab" data-platform="apple">Apple Music</div>
+                <div class="platform-tab" data-platform="youtube">YouTube Music</div>
+                <div class="platform-tab" data-platform="amazon">Amazon Music</div>
+                <div class="platform-tab" data-platform="deezer">Deezer</div>
+            </div>
+            
+            <!-- Spotify Playlists -->
+            <div class="playlists-container active" id="spotify-playlists">
+                <div class="playlists-grid">
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Electronic Vibes">
+                            <span class="playlist-platform">Spotify</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Electronic Vibes</h3>
+                            <p>The best in electronic music, updated weekly with fresh tracks from emerging artists.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 450K Followers</span>
+                                <span><i class="fas fa-music"></i> 120 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Indie Discoveries">
+                            <span class="playlist-platform">Spotify</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Indie Discoveries</h3>
+                            <p>Curated selection of the best independent artists you haven't heard yet.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 320K Followers</span>
+                                <span><i class="fas fa-music"></i> 80 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Chill Beats">
+                            <span class="playlist-platform">Spotify</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Chill Beats</h3>
+                            <p>Relaxing instrumentals and lo-fi vibes for work and study sessions.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 680K Followers</span>
+                                <span><i class="fas fa-music"></i> 150 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Apple Music Playlists -->
+            <div class="playlists-container" id="apple-playlists">
+                <div class="playlists-grid">
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Pop Revolution">
+                            <span class="playlist-platform">Apple Music</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Pop Revolution</h3>
+                            <p>Next-generation pop music pushing boundaries and breaking conventions.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 280K Followers</span>
+                                <span><i class="fas fa-music"></i> 90 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Hip-Hop Essentials">
+                            <span class="playlist-platform">Apple Music</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Hip-Hop Essentials</h3>
+                            <p>The freshest hip-hop tracks from underground to mainstream.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 410K Followers</span>
+                                <span><i class="fas fa-music"></i> 100 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Rock Arena">
+                            <span class="playlist-platform">Apple Music</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Rock Arena</h3>
+                            <p>High-energy rock tracks from emerging bands and established acts.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 190K Followers</span>
+                                <span><i class="fas fa-music"></i> 75 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- YouTube Music Playlists -->
+            <div class="playlists-container" id="youtube-playlists">
+                <div class="playlists-grid">
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="EDM Bangers">
+                            <span class="playlist-platform">YouTube Music</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>EDM Bangers</h3>
+                            <p>The hardest drops and biggest builds in electronic dance music.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 520K Followers</span>
+                                <span><i class="fas fa-music"></i> 110 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="R&B Flavors">
+                            <span class="playlist-platform">YouTube Music</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>R&B Flavors</h3>
+                            <p>Smooth R&B tracks with soulful vocals and contemporary production.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 380K Followers</span>
+                                <span><i class="fas fa-music"></i> 85 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Acoustic Sessions">
+                            <span class="playlist-platform">YouTube Music</span>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Acoustic Sessions</h3>
+                            <p>Intimate acoustic performances and stripped-down versions of popular songs.</p>
+                            <div class="playlist-stats">
+                                <span><i class="fas fa-headphones"></i> 290K Followers</span>
+                                <span><i class="fas fa-music"></i> 65 Tracks</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <h3 class="section-title">Our Playlist Network by Numbers</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Curated Playlists</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">15Million+</div>
+                        <div class="stat-label">Combined Followers</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Platforms Covered</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Artists Featured Monthly</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-section text-center">
+                <h3>Ready to get your music in our playlists?</h3>
+                <p>Submit your tracks for consideration and join thousands of artists who've grown their audience with Planet Colony.</p>
+                <a href="#" class="btn">Submit Your Music</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as your main page) -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in entertainment, news, and technology since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="entertainment.html"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Promotion</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Portfolio</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gaming Hub</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Podcast Network</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Streaming Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dev Tools</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile Apps</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle (Same as your main page)
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Platform tabs functionality
+        const platformTabs = document.querySelectorAll('.platform-tab');
+        const playlistContainers = document.querySelectorAll('.playlists-container');
+        
+        platformTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                platformTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Get platform from data attribute
+                const platform = this.getAttribute('data-platform');
+                
+                // Hide all playlist containers
+                playlistContainers.forEach(container => {
+                    container.classList.remove('active');
+                });
+                
+                // Show selected platform's playlists
+                document.getElementById(`${platform}-playlists`).classList.add('active');
+            });
+        });
+        
+        // Playlist card hover effect
+        const playlistCards = document.querySelectorAll('.playlist-card');
+        
+        playlistCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const cover = this.querySelector('.playlist-cover img');
+                cover.style.transform = 'scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const cover = this.querySelector('.playlist-cover img');
+                cover.style.transform = 'scale(1)';
+            });
+            
+            card.addEventListener('click', function() {
+                const playlistName = this.querySelector('h3').textContent;
+                alert(`Now viewing ${playlistName} playlist`);
+            });
+        });
+        
+        // Animated counter for stats
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const statsSection = document.querySelector('.stats-section');
+        
+        function animateStats() {
+            const rect = statsSection.getBoundingClientRect();
+            const isVisible = (rect.top <= window.innerHeight * 0.75) && 
+                              (rect.bottom >= window.innerHeight * 0.25);
+            
+            if (isVisible) {
+                statNumbers.forEach(number => {
+                    const target = parseInt(number.textContent.replace(/[+,]/g, ''));
+                    const suffix = number.textContent.match(/[+,]/g) ? number.textContent.match(/[+,]/g)[0] : '';
+                    const duration = 2000; // Animation duration in ms
+                    const start = 0;
+                    const increment = target / (duration / 16); // 60fps
+                    
+                    let current = start;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            clearInterval(timer);
+                            current = target;
+                        }
+                        number.textContent = Math.floor(current).toLocaleString() + suffix;
+                    }, 16);
+                });
+                
+                // Remove event listener after animation
+                window.removeEventListener('scroll', animateStats);
+            }
+        }
+        
+        // Run animation when stats section is in view
+        window.addEventListener('scroll', animateStats);
+    </script>
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --header-height: 80px;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: var(--header-height);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 181, 84, 0.3);
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            height: var(--header-height);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-black);
+        }
+        
+        .logo span {
+            color: var(--accent-green);
+        }
+        
+        /* Post Detail Styles */
+        .post-header {
+            margin-bottom: 40px;
+        }
+        
+        .post-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            color: var(--primary-black);
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .post-meta span {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-meta i {
+            margin-right: 5px;
+            color: var(--accent-green);
+        }
+        
+        .post-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .post-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .post-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .post-content h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--primary-black);
+        }
+        
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        
+        .tag {
+            background-color: var(--light-green);
+            color: var(--white);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .author-card {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 60px 0;
+        }
+        
+        .author-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--accent-green);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-right: 30px;
+            flex-shrink: 0;
+        }
+        
+        .author-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .author-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: var(--primary-black);
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        /* Related Posts */
+        .related-posts {
+            margin-top: 80px;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .related-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .related-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .related-card:hover .related-img img {
+            transform: scale(1.05);
+        }
+        
+        .related-content {
+            padding: 20px;
+        }
+        
+        .related-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-green);
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .post-title {
+                font-size: 2rem;
+            }
+            
+            .post-image {
+                height: 300px;
+            }
+            
+            .author-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .author-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            <a href="#" class="btn">Back to Home</a>
+        </div>
+    </header>
+
+    <!-- Post Detail Section -->
+    <section class="section">
+        <div class="container">
+            <article class="post-content">
+                <div class="post-header">
+                    <h1 class="post-title">Revolutionary AI Breakthrough Promises to Transform Healthcare</h1>
+                    <div class="post-meta">
+                        <span><i class="far fa-user"></i> By Sarah Johnson</span>
+                        <span><i class="far fa-calendar"></i> June 15, 2023</span>
+                        <span><i class="far fa-clock"></i> 8 min read</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="AI in Healthcare" class="post-image">
+                </div>
+                
+                <p>Researchers at NeuroTech Labs have developed an artificial intelligence system capable of diagnosing complex diseases with 98% accuracy, potentially revolutionizing the healthcare industry. This breakthrough comes after five years of intensive research and clinical trials.</p>
+                
+                <h2>The Technology Behind the Breakthrough</h2>
+                
+                <p>The new AI system, called MediScan AI, uses advanced deep learning algorithms combined with quantum computing principles to analyze medical imaging, patient history, and real-time biometric data. Unlike previous systems that focused on single modalities, MediScan integrates multiple data sources to provide comprehensive diagnostic assessments.</p>
+                
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="AI Technology">
+                
+                <p>"What sets our system apart is its ability to recognize patterns across completely different types of medical data," explains Dr. Lisa Chen, lead researcher at NeuroTech. "It can correlate subtle changes in a brain scan with minute variations in blood chemistry that would be nearly impossible for human doctors to connect."</p>
+                
+                <h2>Clinical Trial Results</h2>
+                
+                <p>In extensive clinical trials involving over 10,000 patients across 15 hospitals, MediScan AI demonstrated remarkable accuracy:</p>
+                
+                <ul>
+                    <li>98.2% accuracy in early-stage cancer detection (compared to 85% for human specialists)</li>
+                    <li>97.6% accuracy in predicting cardiovascular events within 6 months</li>
+                    <li>96.8% accuracy in diagnosing rare neurological disorders</li>
+                </ul>
+                
+                <p>Perhaps most impressively, the system reduced diagnostic errors by 72% compared to traditional methods in the trial settings.</p>
+                
+                <h2>Potential Impact on Healthcare</h2>
+                
+                <p>The implications of this technology are profound. In rural areas with limited access to specialists, MediScan could provide expert-level diagnostics. For overworked medical staff, it offers a powerful second opinion that never tires. The system also continuously learns from each case it analyzes, becoming more accurate over time.</p>
+                
+                <p>However, the researchers emphasize that the AI is designed to assist doctors, not replace them. "This is about augmenting human expertise, not replacing it," says Dr. Chen. "The AI handles pattern recognition at superhuman levels, while doctors provide the human touch, patient communication, and final decision-making."</p>
+                
+                <div class="post-tags">
+                    <span class="tag">Technology</span>
+                    <span class="tag">Healthcare</span>
+                    <span class="tag">AI</span>
+                    <span class="tag">Innovation</span>
+                </div>
+                
+                <div class="author-card">
+                    <div class="author-avatar">SJ</div>
+                    <div class="author-info">
+                        <h3>Sarah Johnson</h3>
+                        <p>Senior Technology Correspondent with over 10 years of experience covering breakthroughs in AI and healthcare technology.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <section class="related-posts">
+                <h2 class="section-title">Related Articles</h2>
+                <div class="related-grid">
+                    <article class="related-card">
+                        <div class="related-img">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Related Post">
+                        </div>
+                        <div class="related-content">
+                            <h3>How Quantum Computing is Changing Medical Research</h3>
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+                    
+                    <article class="related-card">
+                        <div class="related-img">
+                            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Related Post">
+                        </div>
+                        <div class="related-content">
+                            <h3>The Future of Telemedicine Post-Pandemic</h3>
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+                    
+                    <article class="related-card">
+                        <div class="related-img">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Related Post">
+                        </div>
+                        <div class="related-content">
+                            <h3>Robotic Surgery: Precision at Microscopic Levels</h3>
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in technology, science, and innovation.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">Health</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Email Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Advertise</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple script for back to top button
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back to top functionality
+            const backToTopBtn = document.createElement('a');
+            backToTopBtn.href = '#';
+            backToTopBtn.className = 'back-to-top';
+            backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            backToTopBtn.style.position = 'fixed';
+            backToTopBtn.style.bottom = '30px';
+            backToTopBtn.style.right = '30px';
+            backToTopBtn.style.backgroundColor = 'var(--accent-green)';
+            backToTopBtn.style.color = 'var(--white)';
+            backToTopBtn.style.width = '50px';
+            backToTopBtn.style.height = '50px';
+            backToTopBtn.style.borderRadius = '50%';
+            backToTopBtn.style.display = 'flex';
+            backToTopBtn.style.alignItems = 'center';
+            backToTopBtn.style.justifyContent = 'center';
+            backToTopBtn.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            backToTopBtn.style.transition = 'all 0.3s';
+            backToTopBtn.style.zIndex = '999';
+            
+            backToTopBtn.addEventListener('mouseover', function() {
+                this.style.backgroundColor = 'var(--dark-green)';
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            backToTopBtn.addEventListener('mouseout', function() {
+                this.style.backgroundColor = 'var(--accent-green)';
+                this.style.transform = 'translateY(0)';
+            });
+            
+            document.body.appendChild(backToTopBtn);
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.style.opacity = '1';
+                    backToTopBtn.style.visibility = 'visible';
+                } else {
+                    backToTopBtn.style.opacity = '0';
+                    backToTopBtn.style.visibility = 'hidden';
+                }
+            });
+            
+            // Smooth scroll for back to top
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Initialize back to top button as hidden
+            backToTopBtn.style.opacity = '0';
+            backToTopBtn.style.visibility = 'hidden';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Optimization | Planet Colony Music Promotion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .intro-text {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .algorithm-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .algorithm-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(29, 185, 84, 0.1);
+        }
+        
+        .algorithm-icon {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            margin-bottom: 20px;
+        }
+        
+        .algorithm-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .algorithm-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .platform-section {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+        }
+        
+        .platform-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .platform-tab {
+            padding: 12px 25px;
+            background-color: var(--white);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--medium-gray);
+        }
+        
+        .platform-tab.active, .platform-tab:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-color: var(--accent-green);
+        }
+        
+        .platform-content {
+            display: none;
+        }
+        
+        .platform-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .platform-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-black);
+        }
+        
+        .platform-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .factor-list {
+            margin: 30px 0;
+        }
+        
+        .factor-item {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .factor-item:before {
+            content: "•";
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .factor-item strong {
+            color: var(--primary-black);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        .case-studies {
+            margin: 80px 0;
+        }
+        
+        .case-study-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent-green);
+        }
+        
+        .case-study-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .case-study-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .case-stat {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 150px;
+        }
+        
+        .case-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+        
+        .case-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .algorithm-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Master Streaming Algorithms</h1>
+            <p>Learn how we optimize your music to perform better on platform recommendation systems</p>
+        </div>
+    </section>
+
+    <!-- Algorithm Overview -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Algorithm Optimization Strategy</h2>
+            <p class="intro-text">Streaming platforms use complex algorithms to recommend music. We analyze these systems and implement strategies to increase your chances of appearing in Discover Weekly, Release Radar, Daily Mixes, and other algorithmic playlists.</p>
+            
+            <div class="algorithm-grid">
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Engagement Analysis</h3>
+                    <p>We monitor how listeners interact with your music - skips, saves, repeats, and playlist adds - to identify what resonates best with audiences.</p>
+                </div>
+                
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Audience Targeting</h3>
+                    <p>Our system identifies listener demographics and behaviors to target your music to the most receptive audiences on each platform.</p>
+                </div>
+                
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Release Timing</h3>
+                    <p>We analyze optimal release times when your target audience is most active to maximize initial engagement signals.</p>
+                </div>
+                
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Metadata Optimization</h3>
+                    <p>We refine your track metadata (genre tags, descriptors, etc.) to ensure proper classification in recommendation systems.</p>
+                </div>
+                
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Similar Artist Mapping</h3>
+                    <p>We position your music in the "similar to" networks of established artists to leverage their audience base.</p>
+                </div>
+                
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    <h3>Audio Analysis</h3>
+                    <p>We examine sonic characteristics (BPM, key, energy) to match your tracks with complementary music in recommendation flows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Specific Strategies -->
+    <section class="platform-section">
+        <div class="container">
+            <h2 class="section-title">Platform-Specific Approaches</h2>
+            
+            <div class="platform-tabs">
+                <div class="platform-tab active" data-platform="spotify">Spotify</div>
+                <div class="platform-tab" data-platform="apple">Apple Music</div>
+                <div class="platform-tab" data-platform="youtube">YouTube Music</div>
+            </div>
+            
+            <!-- Spotify Content -->
+            <div class="platform-content active" id="spotify-content">
+                <h3>Spotify Algorithm Optimization</h3>
+                <p>Spotify's recommendation system relies heavily on collaborative filtering and natural language processing. We focus on these key factors:</p>
+                
+                <div class="factor-list">
+                    <div class="factor-item">
+                        <strong>Early Engagement:</strong> Track performance in the first 24-48 hours significantly impacts algorithmic placement.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Completion Rate:</strong> Listeners who play your track all the way through send positive signals.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Listener Retention:</strong> Keeping listeners on the platform after your track ends improves rankings.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Playlist Adds:</strong> Both algorithmic and user-generated playlist placements boost visibility.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Artist Radio Performance:</strong> How well your tracks perform in your own artist radio matters.
+                    </div>
+                </div>
+                
+                <a href="#" class="btn">Get Spotify Optimization</a>
+            </div>
+            
+            <!-- Apple Music Content -->
+            <div class="platform-content" id="apple-content">
+                <h3>Apple Music Algorithm Optimization</h3>
+                <p>Apple Music's "For You" recommendations combine editorial curation with algorithmic suggestions. Our strategy focuses on:</p>
+                
+                <div class="factor-list">
+                    <div class="factor-item">
+                        <strong>Library Adds:</strong> When users add your music to their library, it's a strong positive signal.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Play Counts:</strong> Repeated listens from the same users indicate strong affinity.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Skip Rates:</strong> We work to minimize early skips which can negatively impact placement.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Genre Alignment:</strong> Apple's system heavily weights genre and style matching.
+                    </div>
+                    <div class="factor-item">
+                        <strong>New Music Friday:</strong> Performance in this playlist can trigger broader algorithmic promotion.
+                    </div>
+                </div>
+                
+                <a href="#" class="btn">Get Apple Music Optimization</a>
+            </div>
+            
+            <!-- YouTube Music Content -->
+            <div class="platform-content" id="youtube-content">
+                <h3>YouTube Music Algorithm Optimization</h3>
+                <p>YouTube's recommendation system prioritizes watch time and session depth. Our approach emphasizes:</p>
+                
+                <div class="factor-list">
+                    <div class="factor-item">
+                        <strong>Watch Duration:</strong> Longer view times send stronger positive signals.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Session Extension:</strong> When viewers continue to other videos after yours.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Thumbnail CTR:</strong> Click-through rate on your video thumbnails impacts reach.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Comment Activity:</strong> Engagement in comments can boost visibility.
+                    </div>
+                    <div class="factor-item">
+                        <strong>Mix Placement:</strong> Getting included in autogenerated mixes extends reach.
+                    </div>
+                </div>
+                
+                <a href="#" class="btn">Get YouTube Music Optimization</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="section case-studies">
+        <div class="container">
+            <h2 class="section-title">Algorithm Optimization Success Stories</h2>
+            
+            <div class="case-study-card">
+                <h3>Indie Pop Artist: 3M+ Algorithmic Streams</h3>
+                <p>By analyzing listener patterns and optimizing release timing, we helped an emerging indie pop artist achieve over 3 million streams from algorithmic playlists in 3 months.</p>
+                
+                <div class="case-study-stats">
+                    <div class="case-stat">
+                        <div class="case-stat-value">3200%</div>
+                        <div class="case-stat-label">Increase in algorithmic streams</div>
+                    </div>
+                    <div class="case-stat">
+                        <div class="case-stat-value">78</div>
+                        <div class="case-stat-label">Algorithmic playlists reached</div>
+                    </div>
+                    <div class="case-stat">
+                        <div class="case-stat-value">42%</div>
+                        <div class="case-stat-label">Listener retention increase</div>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn-outline">View Full Case Study</a>
+            </div>
+            
+            <div class="case-study-card">
+                <h3>Electronic Producer: Discover Weekly Breakthrough</h3>
+                <p>Through metadata refinement and targeted promotion, we secured placement in Spotify's Discover Weekly for an electronic producer, resulting in 1.2 million new monthly listeners.</p>
+                
+                <div class="case-study-stats">
+                    <div class="case-stat">
+                        <div class="case-stat-value">1.2M</div>
+                        <div class="case-stat-label">New monthly listeners</div>
+                    </div>
+                    <div class="case-stat">
+                        <div class="case-stat-value">19</div>
+                        <div class="case-stat-label">Weeks in Discover Weekly</div>
+                    </div>
+                    <div class="case-stat">
+                        <div class="case-stat-value">65%</div>
+                        <div class="case-stat-label">Follow rate from streams</div>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn-outline">View Full Case Study</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background-color: var(--light-gray); text-align: center;">
+        <div class="container">
+            <h2 class="section-title">Ready to Boost Your Algorithmic Reach?</h2>
+            <p style="max-width: 700px; margin: 0 auto 30px;">Our team of data scientists and music promotion experts can analyze your current performance and implement strategies to increase your visibility in platform recommendation systems.</p>
+            <a href="#" class="btn">Get Algorithm Optimization</a>
+        </div>
+    </section>
+
+    <script>
+        // Platform tabs functionality
+        const platformTabs = document.querySelectorAll('.platform-tab');
+        const platformContents = document.querySelectorAll('.platform-content');
+        
+        platformTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                platformTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Get platform from data attribute
+                const platform = this.getAttribute('data-platform');
+                
+                // Hide all platform contents
+                platformContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected platform's content
+                document.getElementById(`${platform}-content`).classList.add('active');
+            });
+        });
+        
+        // Animate case study stats when scrolling
+        const caseStats = document.querySelectorAll('.case-stat-value');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stat = entry.target;
+                    const target = parseInt(stat.textContent.replace(/[+,%]/g, ''));
+                    const suffix = stat.textContent.match(/[+,%]/g) ? stat.textContent.match(/[+,%]/g)[0] : '';
+                    const duration = 1500;
+                    const start = 0;
+                    const increment = target / (duration / 16);
+                    
+                    let current = start;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            clearInterval(timer);
+                            current = target;
+                        }
+                        stat.textContent = Math.floor(current).toLocaleString() + suffix;
+                    }, 16);
+                    
+                    // Stop observing after animation
+                    observer.unobserve(stat);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        caseStats.forEach(stat => {
+            observer.observe(stat);
+        });
+    </script>
+</body>
+</html>

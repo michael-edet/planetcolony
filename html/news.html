@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --header-height: 80px;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: var(--header-height);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 181, 84, 0.3);
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            height: var(--header-height);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-black);
+        }
+        
+        .logo span {
+            color: var(--accent-green);
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            margin-right: 30px;
+        }
+        
+        .nav-list li {
+            margin: 0 15px;
+        }
+        
+        .nav-list a {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-green);
+            transition: width 0.3s;
+        }
+        
+        .nav-list a:hover {
+            color: var(--accent-green);
+        }
+        
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-black);
+        }
+        
+        .portfolio-menu {
+            position: relative;
+        }
+        
+        .portfolio-btn {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .portfolio-btn:hover {
+            background-color: var(--accent-green);
+        }
+        
+        .portfolio-btn i {
+            margin-left: 5px;
+        }
+        
+        .portfolio-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .portfolio-menu:hover .portfolio-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .portfolio-dropdown h3 {
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .portfolio-dropdown li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .portfolio-dropdown li:last-child {
+            border-bottom: none;
+        }
+        
+        .portfolio-dropdown a {
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .portfolio-dropdown a:hover {
+            color: var(--accent-green);
+        }
+        
+        .portfolio-dropdown i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--primary-black);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-content {
+            position: relative;
+            height: 100%;
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu ul {
+            margin-top: 50px;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-menu a {
+            color: var(--white);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .mobile-menu a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--accent-green);
+        }
+        
+        .menu-title {
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-green);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1500;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* News Hero Section */
+        .news-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+        }
+        
+        .news-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .news-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .news-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .news-date {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            color: #ccc;
+        }
+        
+        .news-date i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        /* News Categories */
+        .news-categories {
+            background-color: var(--light-gray);
+            padding: 30px 0;
+            position: sticky;
+            top: var(--header-height);
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .categories-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .category-btn {
+            padding: 10px 25px;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-color: var(--accent-green);
+        }
+        
+        /* News Content */
+        .news-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .main-news {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-image {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+        
+        .news-info {
+            padding: 25px;
+        }
+        
+        .news-category {
+            display: inline-block;
+            background-color: var(--light-green);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .news-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+            line-height: 1.4;
+        }
+        
+        .news-excerpt {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* Featured News */
+        .featured-news {
+            margin-bottom: 50px;
+        }
+        
+        .featured-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .featured-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 350px;
+        }
+        
+        .featured-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .featured-category {
+            display: inline-block;
+            background-color: var(--accent-green);
+            color: var(--white);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .featured-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-black);
+            line-height: 1.3;
+        }
+        
+        .featured-excerpt {
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        /* Sidebar */
+        .sidebar-widget {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .widget-title {
+            position: relative;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .widget-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-green);
+        }
+        
+        .trending-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .trending-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .trending-list a {
+            display: flex;
+            align-items: flex-start;
+            transition: color 0.3s;
+        }
+        
+        .trending-list a:hover {
+            color: var(--accent-green);
+        }
+        
+        .trending-number {
+            background-color: var(--accent-green);
+            color: var(--white);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .trending-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .trending-meta {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        
+        .category-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .category-list a {
+            display: flex;
+            justify-content: space-between;
+            transition: color 0.3s;
+        }
+        
+        .category-list a:hover {
+            color: var(--accent-green);
+        }
+        
+        .category-count {
+            background-color: var(--light-gray);
+            color: #666;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background-color: var(--light-gray);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        /* Newsletter Widget */
+        .newsletter-widget {
+            background: linear-gradient(135deg, var(--accent-green), var(--dark-green));
+            color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .newsletter-widget .widget-title {
+            color: var(--white);
+            padding-bottom: 0;
+            margin-bottom: 15px;
+        }
+        
+        .newsletter-widget .widget-title::after {
+            display: none;
+        }
+        
+        .newsletter-widget p {
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .newsletter-form input {
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--primary-black);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #000;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 10px;
+        }
+        
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .page-link:hover, .page-link.active {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-green);
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .featured-card {
+                flex-direction: column;
+            }
+            
+            .featured-image img {
+                min-height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list,
+            .portfolio-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .news-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .featured-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .news-hero {
+                height: 50vh;
+            }
+            
+            .news-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .news-hero p {
+                font-size: 1rem;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                    <li><a href="news.html" class="active">News</a></li>
+                    <li><a href="#">Technology</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="news.html" class="active"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="#"><i class="fas fa-microchip"></i> Technology</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Community</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- News Hero Section -->
+    <section class="news-hero">
+        <div class="container news-hero-content">
+            <h1>Breaking News & Latest Updates</h1>
+            <p>Stay informed with Planet Colony's comprehensive coverage of technology, entertainment, science, and global events.</p>
+            <div class="news-date">
+                <i class="fas fa-calendar-alt"></i> September 28, 2023
+            </div>
+        </div>
+    </section>
+
+    <!-- News Categories -->
+    <section class="news-categories">
+        <div class="container categories-container">
+            <button class="category-btn active">All News</button>
+            <button class="category-btn">Technology</button>
+            <button class="category-btn">Entertainment</button>
+            <button class="category-btn">Science</button>
+            <button class="category-btn">Business</button>
+            <button class="category-btn">Health</button>
+            <button class="category-btn">Politics</button>
+        </div>
+    </section>
+
+    <!-- News Content -->
+    <section class="section">
+        <div class="container">
+            <div class="news-content">
+                <div class="main-news">
+                    <!-- Featured News -->
+                    <div class="featured-news">
+                        <div class="featured-card">
+                            <div class="featured-image">
+                                <img src="https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Featured News">
+                            </div>
+                            <div class="featured-content">
+                                <span class="featured-category">Technology</span>
+                                <h2 class="featured-title">Quantum Computing Breakthrough Opens New Possibilities for AI Development</h2>
+                                <p class="featured-excerpt">Scientists at Quantum Labs have achieved a major milestone in quantum computing stability, potentially accelerating AI development by years. This breakthrough could revolutionize how we approach complex problems in medicine, climate modeling, and cryptography.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 3 hours ago</span>
+                                    <span><i class="far fa-comment"></i> 142 comments</span>
+                                </div>
+                                <a href="#" class="btn" style="margin-top: 20px;">Read Full Story</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- News Grid -->
+                    <h2 class="section-title">Latest News</h2>
+                    <div class="news-grid">
+                        <div class="news-card">
+                            <div class="news-image">
+                                <img src="https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="News">
+                            </div>
+                            <div class="news-info">
+                                <span class="news-category">Science</span>
+                                <h3 class="news-title">NASA Announces Discovery of Earth-like Planet in Nearby Star System</h3>
+                                <p class="news-excerpt">The newly discovered planet, named Kepler-452f, shows promising signs of habitability with liquid water and a protective atmosphere.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 5 hours ago</span>
+                                    <span><i class="far fa-user"></i> Sarah Johnson</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="News">
+                            </div>
+                            <div class="news-info">
+                                <span class="news-category">Entertainment</span>
+                                <h3 class="news-title">Streaming Wars Intensify as New Players Enter the Market</h3>
+                                <p class="news-excerpt">With three new streaming services launching this quarter, industry analysts predict a major shift in content distribution strategies.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 7 hours ago</span>
+                                    <span><i class="far fa-user"></i> Michael Chen</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="News">
+                            </div>
+                            <div class="news-info">
+                                <span class="news-category">Technology</span>
+                                <h3 class="news-title">New AI Model Can Detect Cancer With 98% Accuracy</h3>
+                                <p class="news-excerpt">Medical researchers have developed an AI system that outperforms human radiologists in early cancer detection.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 9 hours ago</span>
+                                    <span><i class="far fa-user"></i> Dr. Emma Rodriguez</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="News">
+                            </div>
+                            <div class="news-info">
+                                <span class="news-category">Business</span>
+                                <h3 class="news-title">Global Tech Stocks Surge as AI Market Expands Rapidly</h3>
+                                <p class="news-excerpt">Investors are pouring capital into AI-focused companies as the market is projected to reach $1.5 trillion by 2030.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 12 hours ago</span>
+                                    <span><i class="far fa-user"></i> Robert Thompson</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="News">
+                            </div>
+                            <div class="news-info">
+                                <span class="news-category">Health</span>
+                                <h3 class="news-title">Breakthrough in Gene Therapy Offers Hope for Rare Diseases</h3>
+                                <p class="news-excerpt">Scientists have developed a new delivery method that could make gene therapy more accessible and effective.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 14 hours ago</span>
+                                    <span><i class="far fa-user"></i> Dr. James Wilson</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="News">
+                            </div>
+                            <div class="news-info">
+                                <span class="news-category">Environment</span>
+                                <h3 class="news-title">Renewable Energy Investments Reach Record High in 2023</h3>
+                                <p class="news-excerpt">Global investments in solar, wind, and other renewables have surpassed fossil fuel investments for the first time in history.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 1 day ago</span>
+                                    <span><i class="far fa-user"></i> Lisa Greenfield</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <a href="#" class="page-link active">1</a>
+                        <a href="#" class="page-link">2</a>
+                        <a href="#" class="page-link">3</a>
+                        <a href="#" class="page-link">4</a>
+                        <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Trending News -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Trending Now</h3>
+                        <ul class="trending-list">
+                            <li>
+                                <a href="#">
+                                    <span class="trending-number">1</span>
+                                    <div>
+                                        <div class="trending-title">Global Tech Summit Announces Revolutionary AI Ethics Framework</div>
+                                        <div class="trending-meta">Technology • 2 hours ago</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="trending-number">2</span>
+                                    <div>
+                                        <div class="trending-title">Blockchain Technology Adopted by Major Banks for Secure Transactions</div>
+                                        <div class="trending-meta">Finance • 4 hours ago</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="trending-number">3</span>
+                                    <div>
+                                        <div class="trending-title">New Study Reveals Benefits of Mediterranean Diet on Longevity</div>
+                                        <div class="trending-meta">Health • 6 hours ago</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="trending-number">4</span>
+                                    <div>
+                                        <div class="trending-title">Mars Rover Discovers Evidence of Ancient Microbial Life</div>
+                                        <div class="trending-meta">Science • 8 hours ago</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="trending-number">5</span>
+                                    <div>
+                                        <div class="trending-title">Electric Vehicle Sales Surpass Expectations in Q3 2023</div>
+                                        <div class="trending-meta">Automotive • 10 hours ago</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Categories -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">News Categories</h3>
+                        <ul class="category-list">
+                            <li>
+                                <a href="#">
+                                    <span>Technology</span>
+                                    <span class="category-count">142</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Entertainment</span>
+                                    <span class="category-count">98</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Science</span>
+                                    <span class="category-count">76</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Business</span>
+                                    <span class="category-count">64</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Health</span>
+                                    <span class="category-count">57</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Politics</span>
+                                    <span class="category-count">43</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Environment</span>
+                                    <span class="category-count">38</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Newsletter -->
+                    <div class="newsletter-widget">
+                        <h3 class="widget-title">Stay Updated</h3>
+                        <p>Subscribe to our newsletter for daily news updates</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Tags -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Popular Tags</h3>
+                        <div class="tags-container">
+                            <a href="#" class="tag">Technology</a>
+                            <a href="#" class="tag">AI</a>
+                            <a href="#" class="tag">Space</a>
+                            <a href="#" class="tag">Innovation</a>
+                            <a href="#" class="tag">Science</a>
+                            <a href="#" class="tag">Health</a>
+                            <a href="#" class="tag">Climate</a>
+                            <a href="#" class="tag">Finance</a>
+                            <a href="#" class="tag">Entertainment</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in entertainment, news, and technology since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="news.html"><i class="fas fa-chevron-right"></i> News</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Portfolio</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gaming Hub</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Podcast Network</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Streaming Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dev Tools</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile Apps</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Category filter functionality
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // In a real implementation, this would filter news content
+                document.querySelector('.section-title').textContent = `Latest ${btn.textContent}`;
+            });
+        });
+        
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const emailInput = newsletterForm.querySelector('input[type="email"]');
+                if (emailInput.value) {
+                    alert(`Thank you for subscribing with ${emailInput.value}! You'll receive our daily news updates.`);
+                    emailInput.value = '';
+                }
+            });
+        }
+        
+        // News card click functionality
+        document.querySelectorAll('.news-card, .featured-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('.news-title, .featured-title').textContent;
+                alert(`Opening news article: ${title}`);
+            });
+        });
+        
+        // Update current date
+        const currentDate = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.querySelector('.news-date').innerHTML = `<i class="fas fa-calendar-alt"></i> ${currentDate.toLocaleDateString('en-US', options)}`;
+    </script>
+</body>
+</html>

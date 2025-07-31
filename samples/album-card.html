@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album Detail | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --header-height: 80px;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: var(--header-height);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(29, 181, 84, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            height: var(--header-height);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-black);
+        }
+        
+        .logo span {
+            color: var(--accent-green);
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            margin-right: 30px;
+        }
+        
+        .nav-list li {
+            margin: 0 15px;
+        }
+        
+        .nav-list a {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-green);
+            transition: width 0.3s;
+        }
+        
+        .nav-list a:hover {
+            color: var(--accent-green);
+        }
+        
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-black);
+        }
+        
+        .portfolio-menu {
+            position: relative;
+        }
+        
+        .portfolio-btn {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .portfolio-btn:hover {
+            background-color: var(--accent-green);
+        }
+        
+        .portfolio-btn i {
+            margin-left: 5px;
+        }
+        
+        .portfolio-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .portfolio-menu:hover .portfolio-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .portfolio-dropdown h3 {
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .portfolio-dropdown li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .portfolio-dropdown li:last-child {
+            border-bottom: none;
+        }
+        
+        .portfolio-dropdown a {
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .portfolio-dropdown a:hover {
+            color: var(--accent-green);
+        }
+        
+        .portfolio-dropdown i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--primary-black);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-content {
+            position: relative;
+            height: 100%;
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu ul {
+            margin-top: 50px;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-menu a {
+            color: var(--white);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .mobile-menu a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--accent-green);
+        }
+        
+        .menu-title {
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-green);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1500;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Album Detail Styles */
+        .album-header {
+            display: flex;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .album-cover {
+            flex: 1;
+            min-width: 300px;
+            margin-right: 40px;
+            position: relative;
+        }
+        
+        .album-cover img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .album-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background-color: rgba(29, 185, 84, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .album-play:hover {
+            background-color: var(--dark-green);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .album-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .album-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .album-artist {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        
+        .album-meta {
+            display: flex;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            margin-right: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .meta-item i {
+            color: var(--accent-green);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .album-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        /* Tracklist */
+        .tracklist {
+            margin-bottom: 60px;
+        }
+        
+        .tracklist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .tracklist-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .tracklist-table th {
+            text-align: left;
+            padding: 15px 10px;
+            border-bottom: 2px solid var(--medium-gray);
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .tracklist-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid var(--medium-gray);
+            vertical-align: middle;
+        }
+        
+        .tracklist-table tr:hover {
+            background-color: rgba(29, 185, 84, 0.05);
+        }
+        
+        .track-number {
+            width: 50px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .track-play {
+            width: 40px;
+            text-align: center;
+            color: var(--accent-green);
+            cursor: pointer;
+        }
+        
+        .track-title {
+            font-weight: 600;
+        }
+        
+        .track-duration {
+            width: 80px;
+            text-align: right;
+            color: #666;
+        }
+        
+        /* Album Description */
+        .album-description {
+            margin-bottom: 60px;
+        }
+        
+        .album-description h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-black);
+        }
+        
+        .album-description p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+        
+        /* Related Albums */
+        .related-albums {
+            margin-bottom: 60px;
+        }
+        
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .album-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(29, 185, 84, 0.1);
+        }
+        
+        .album-card-cover {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .album-card-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .album-card:hover .album-card-cover img {
+            transform: scale(1.05);
+        }
+        
+        .album-card-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(29, 185, 84, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .album-card:hover .album-card-play {
+            opacity: 1;
+        }
+        
+        .album-card-info {
+            padding: 20px;
+        }
+        
+        .album-card-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .album-card-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .newsletter .section-title {
+            color: var(--white);
+        }
+        
+        .newsletter .section-title::after {
+            background-color: var(--accent-green);
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 30px 30px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--dark-green);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-green);
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        .social-links-footer {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links-footer a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+        
+        .social-links-footer a:hover {
+            background-color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .album-header {
+                flex-direction: column;
+            }
+            
+            .album-cover {
+                margin-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .album-title {
+                font-size: 2rem;
+            }
+            
+            .album-artist {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list,
+            .portfolio-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .tracklist-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .album-title {
+                font-size: 1.8rem;
+            }
+            
+            .meta-item {
+                margin-right: 20px;
+            }
+            
+            .album-actions {
+                flex-direction: column;
+            }
+            
+            .album-actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="sports.html">Sports</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="entertainment.html"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="technology.html"><i class="fas fa-microchip"></i> Technology</a></li>
+                <li><a href="sports.html"><i class="fas fa-running"></i> Sports</a></li>
+                <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Album Detail Section -->
+    <section class="section">
+        <div class="container">
+            <div class="album-header">
+                <div class="album-cover">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Chromatic Album Cover">
+                    <div class="album-play">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="album-info">
+                    <h1 class="album-title">Chromatic</h1>
+                    <p class="album-artist">Ava Martinez</p>
+                    
+                    <div class="album-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-music"></i>
+                            <span>Pop • R&B • Electronic</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Released: March 10, 2023</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-compact-disc"></i>
+                            <span>12 Tracks</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>48:22 Duration</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-headphones"></i>
+                            <span>1.2B Streams</span>
+                        </div>
+                    </div>
+                    
+                    <div class="album-actions">
+                        <a href="#" class="btn"><i class="fas fa-play"></i> Play Album</a>
+                        <a href="#" class="btn btn-outline"><i class="fas fa-heart"></i> Save to Library</a>
+                        <a href="#" class="btn btn-outline"><i class="fas fa-share-alt"></i> Share</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tracklist">
+                <h2 class="section-title">Tracklist</h2>
+                <table class="tracklist-table">
+                    <thead>
+                        <tr>
+                            <th class="track-number">#</th>
+                            <th class="track-title">Title</th>
+                            <th class="track-duration"><i class="fas fa-clock"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="track-number">1</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Neon Love</td>
+                            <td class="track-duration">3:42</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">2</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Electric Dreams</td>
+                            <td class="track-duration">4:15</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">3</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Midnight in Tokyo</td>
+                            <td class="track-duration">3:58</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">4</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Fading Lights</td>
+                            <td class="track-duration">4:22</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">5</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Chromatic Love</td>
+                            <td class="track-duration">3:37</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">6</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Digital Heartbeat</td>
+                            <td class="track-duration">4:05</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">7</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Velvet Sky</td>
+                            <td class="track-duration">3:51</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">8</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Neon Love (Acoustic)</td>
+                            <td class="track-duration">3:45</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">9</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">City of Ghosts</td>
+                            <td class="track-duration">4:18</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">10</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Silhouettes</td>
+                            <td class="track-duration">3:29</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">11</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Afterglow</td>
+                            <td class="track-duration">4:33</td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">12</td>
+                            <td class="track-play"><i class="fas fa-play"></i></td>
+                            <td class="track-title">Until Dawn</td>
+                            <td class="track-duration">5:07</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="album-description">
+                <h2>About This Album</h2>
+                <p>"Chromatic" is the third studio album by American singer-songwriter Ava Martinez, released on March 10, 2023. The album represents a bold artistic evolution for Martinez, blending her signature R&B vocals with innovative electronic production and vivid lyrical storytelling.</p>
+                
+                <p>Recorded over two years in studios across Los Angeles, London, and Tokyo, "Chromatic" explores themes of love, identity, and self-discovery through a vibrant sonic palette. The album's title reflects its conceptual approach to color as a metaphor for emotional states and personal transformation.</p>
+                
+                <p>Martinez collaborated with a diverse range of producers including Max Martin, Jack Antonoff, and herself (under her production alias "Spectrum") to create what critics have called "a masterclass in contemporary pop music." The album features guest appearances from rapper Jaden Cole on the remix of lead single "Neon Love" and British singer-songwriter James Blake on the haunting ballad "Silhouettes."</p>
+                
+                <p>Upon release, "Chromatic" debuted at #1 in 32 countries and received widespread critical acclaim. Rolling Stone named it "the defining pop album of 2023" while Pitchfork praised its "daring experimentation balanced with irresistible pop sensibility." The album earned Martinez eight Grammy nominations, including Album of the Year and Best Pop Vocal Album.</p>
+                
+                <p>The accompanying "Chromatic World Tour" broke numerous attendance records and was hailed for its innovative stage design featuring real-time visual projections that responded to the music's frequencies and Martinez's movements.</p>
+            </div>
+            
+            <div class="related-albums">
+                <h2 class="section-title">More Releases</h2>
+                <div class="album-grid">
+                    <div class="album-card">
+                        <div class="album-card-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Electric Dreams">
+                            <div class="album-card-play">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="album-card-info">
+                            <h3>Electric Dreams</h3>
+                            <p>Ava Martinez • 2021</p>
+                            <a href="#" class="btn">View Album</a>
+                        </div>
+                    </div>
+                    
+                    <div class="album-card">
+                        <div class="album-card-cover">
+                            <img src="https://images.unsplash.com/photo-1517230878791-4d28214057c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Whispers in the Dark">
+                            <div class="album-card-play">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="album-card-info">
+                            <h3>Whispers in the Dark</h3>
+                            <p>Ava Martinez • 2018</p>
+                            <a href="#" class="btn">View Album</a>
+                        </div>
+                    </div>
+                    
+                    <div class="album-card">
+                        <div class="album-card-cover">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Midnight Thoughts">
+                            <div class="album-card-play">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="album-card-info">
+                            <h3>Midnight Thoughts</h3>
+                            <p>Ava Martinez • 2016</p>
+                            <a href="#" class="btn">View Album</a>
+                        </div>
+                    </div>
+                    
+                    <div class="album-card">
+                        <div class="album-card-cover">
+                            <img src="https://images.unsplash.com/photo-1487215078519-e21cc028cb29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="The Color Spectrum">
+                            <div class="album-card-play">
+                                <i class="fas

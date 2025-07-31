@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Partners | Planet Colony Music Promotion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Media Partners Specific Styles */
+        .media-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .media-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .media-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .media-intro {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        
+        .media-intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .media-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .media-filter-btn {
+            padding: 10px 20px;
+            background-color: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .media-filter-btn.active, .media-filter-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-color: var(--accent-green);
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .media-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .media-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(29, 185, 84, 0.1);
+        }
+        
+        .media-logo {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .media-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+        
+        .media-card:hover .media-logo img {
+            filter: grayscale(0%);
+        }
+        
+        .media-info {
+            padding: 25px;
+        }
+        
+        .media-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+        }
+        
+        .media-type {
+            display: inline-block;
+            background-color: var(--light-gray);
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .media-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .media-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        /* Coverage Examples */
+        .coverage-section {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+            margin: 60px 0;
+        }
+        
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .coverage-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .coverage-image {
+            height: 200px;
+        }
+        
+        .coverage-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .coverage-content {
+            padding: 25px;
+        }
+        
+        .coverage-source {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .source-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .source-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .source-name {
+            font-weight: 600;
+            color: var(--primary-black);
+        }
+        
+        .coverage-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .coverage-date {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .coverage-date i {
+            margin-right: 5px;
+            color: var(--accent-green);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            margin: 80px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            margin-bottom: 20px;
+        }
+        
+        .stat-card .stat-number {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 1rem;
+            color: #555;
+        }
+        
+        /* Testimonials */
+        .testimonials-section {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 80px 0;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: #222;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--accent-green);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 25px;
+            color: #ddd;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .media-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .media-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .coverage-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (Same as your main page) -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                    <li><a href="promotion.html">Promotion</a></li>
+                    <li><a href="#">Technology</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu (Same as your main page) -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="entertainment.html"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="promotion.html"><i class="fas fa-bullhorn"></i> Promotion</a></li>
+                <li><a href="#"><i class="fas fa-microchip"></i> Technology</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="media-hero">
+        <div class="container media-hero-content">
+            <h1>Our Media Partners</h1>
+            <p>Connecting artists with top-tier music publications, blogs, and broadcast media worldwide</p>
+            <a href="#media-partners" class="btn">Explore Partners</a>
+        </div>
+    </section>
+
+    <!-- Media Partners Section -->
+    <section class="section" id="media-partners">
+        <div class="container">
+            <div class="media-intro">
+                <h2 class="section-title">Premium Media Network</h2>
+                <p>Planet Colony has established relationships with hundreds of music media outlets across print, digital, and broadcast platforms. Our network includes industry-leading publications, influential blogs, and major broadcasters that help amplify your music to the right audiences.</p>
+            </div>
+            
+            <!-- Media Filter -->
+            <div class="media-filter">
+                <button class="media-filter-btn active" data-type="all">All Media</button>
+                <button class="media-filter-btn" data-type="publication">Publications</button>
+                <button class="media-filter-btn" data-type="blog">Blogs</button>
+                <button class="media-filter-btn" data-type="radio">Radio</button>
+                <button class="media-filter-btn" data-type="podcast">Podcasts</button>
+            </div>
+            
+            <!-- Media Grid -->
+            <div class="media-grid">
+                <!-- Publication -->
+                <div class="media-card" data-type="publication">
+                    <div class="media-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Rolling_Stone_Logo.svg/1200px-Rolling_Stone_Logo.svg.png" alt="Rolling Stone">
+                    </div>
+                    <div class="media-info">
+                        <h3>Rolling Stone</h3>
+                        <span class="media-type">Music Publication</span>
+                        <div class="media-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">30M+</div>
+                                <div class="stat-label">Readers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Countries</div>
+                            </div>
+                        </div>
+                        <p class="media-description">The definitive voice in music journalism since 1967. Features artist profiles, album reviews, and industry news.</p>
+                        <a href="#" class="btn btn-small">View Coverage Examples</a>
+                    </div>
+                </div>
+                
+                <!-- Blog -->
+                <div class="media-card" data-type="blog">
+                    <div class="media-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pitchfork_Media_logo.svg/1200px-Pitchfork_Media_logo.svg.png" alt="Pitchfork">
+                    </div>
+                    <div class="media-info">
+                        <h3>Pitchfork</h3>
+                        <span class="media-type">Music Blog</span>
+                        <div class="media-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">8M+</div>
+                                <div class="stat-label">Monthly Visitors</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">9.2</div>
+                                <div class="stat-label">Avg. Rating</div>
+                            </div>
+                        </div>
+                        <p class="media-description">The most influential music publication for indie and alternative artists. Known for its rigorous review system.</p>
+                        <a href="#" class="btn btn-small">View Coverage Examples</a>
+                    </div>
+                </div>
+                
+                <!-- Radio -->
+                <div class="media-card" data-type="radio">
+                    <div class="media-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/BBC_Radio_1_Logo_2021.svg/1200px-BBC_Radio_1_Logo_2021.svg.png" alt="BBC Radio 1">
+                    </div>
+                    <div class="media-info">
+                        <h3>BBC Radio 1</h3>
+                        <span class="media-type">Radio Station</span>
+                        <div class="media-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">9.8M</div>
+                                <div class="stat-label">Weekly Listeners</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">35+</div>
+                                <div class="stat-label">Shows</div>
+                            </div>
+                        </div>
+                        <p class="media-description">The UK's most influential radio station for new music. Features emerging artists alongside established acts.</p>
+                        <a href="#" class="btn btn-small">View Coverage Examples</a>
+                    </div>
+                </div>
+                
+                <!-- Podcast -->
+                <div class="media-card" data-type="podcast">
+                    <div class="media-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Song_Exploder_podcast_logo.png/800px-Song_Exploder_podcast_logo.png" alt="Song Exploder">
+                    </div>
+                    <div class="media-info">
+                        <h3>Song Exploder</h3>
+                        <span class="media-type">Podcast</span>
+                        <div class="media-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">500K+</div>
+                                <div class="stat-label">Downloads/Month</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">250+</div>
+                                <div class="stat-label">Episodes</div>
+                            </div>
+                        </div>
+                        <p class="media-description">Artists break down the creative process behind their songs. Featured on Netflix as a documentary series.</p>
+                        <a href="#" class="btn btn-small">View Coverage Examples</a>
+                    </div>
+                </div>
+                
+                <!-- Publication -->
+                <div class="media-card" data-type="publication">
+                    <div class="media-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Billboard_Logo_2016.svg/1200px-Billboard_Logo_2016.svg.png" alt="Billboard">
+                    </div>
+                    <div class="media-info">
+                        <h3>Billboard</h3>
+                        <span class="media-type">Music Publication</span>
+                        <div class="media-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">16M+</div>
+                                <div class="stat-label">Readers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Charts</div>
+                            </div>
+                        </div>
+                        <p class="media-description">The industry standard for music charts and news. Coverage in Billboard can significantly impact chart performance.</p>
+                        <a href="#" class="btn btn-small">View Coverage Examples</a>
+                    </div>
+                </div>
+                
+                <!-- Blog -->
+                <div class="media-card" data-type="blog">
+                    <div class="media-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/The_Fader_logo.png/800px-The_Fader_logo.png" alt="The Fader">
+                    </div>
+                    <div class="media-info">
+                        <h3>The Fader</h3>
+                        <span class="media-type">Music Blog</span>
+                        <div class="media-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">5M+</div>
+                                <div class="stat-label">Monthly Visitors</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">80%</div>
+                                <div class="stat-label">18-34 Demo</div>
+                            </div>
+                        </div>
+                        <p class="media-description">Cutting-edge music coverage with a focus on emerging artists and cultural trends. Known for breaking new talent.</p>
+                        <a href="#" class="btn btn-small">View Coverage Examples</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coverage Examples Section -->
+    <section class="coverage-section">
+        <div class="container">
+            <h2 class="section-title">Recent Media Coverage</h2>
+            <p class="media-intro">Examples of how we've secured coverage for artists across our media network</p>
+            
+            <div class="coverage-grid">
+                <div class="coverage-card">
+                    <div class="coverage-image">
+                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Artist Feature">
+                    </div>
+                    <div class="coverage-content">
+                        <div class="coverage-source">
+                            <div class="source-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Rolling_Stone_Logo.svg/1200px-Rolling_Stone_Logo.svg.png" alt="Rolling Stone">
+                            </div>
+                            <div class="source-name">Rolling Stone</div>
+                        </div>
+                        <h4>10 New Artists You Need to Know</h4>
+                        <p>Planet Colony client Nova Wave featured in Rolling Stone's monthly roundup of breakthrough artists, leading to a 200% increase in Spotify followers.</p>
+                        <div class="coverage-date">
+                            <i class="far fa-calendar"></i> June 15, 2023
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="coverage-card">
+                    <div class="coverage-image">
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Album Review">
+                    </div>
+                    <div class="coverage-content">
+                        <div class="coverage-source">
+                            <div class="source-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pitchfork_Media_logo.svg/1200px-Pitchfork_Media_logo.svg.png" alt="Pitchfork">
+                            </div>
+                            <div class="source-name">Pitchfork</div>
+                        </div>
+                        <h4>Album Review: "Neon Dreams" by Ava Synthwave</h4>
+                        <p>Featured as "Best New Music" with an 8.7 rating, resulting in the album debuting at #3 on the Electronic charts.</p>
+                        <div class="coverage-date">
+                            <i class="far fa-calendar"></i> May 22, 2023
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="coverage-card">
+                    <div class="coverage-image">
+                        <img src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Radio Interview">
+                    </div>
+                    <div class="coverage-content">
+                        <div class="coverage-source">
+                            <div class="source-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/BBC_Radio_1_Logo_2021.svg/1200px-BBC_Radio_1_Logo_2021.svg.png" alt="BBC Radio 1">
+                            </div>
+                            <div class="source-name">BBC Radio 1</div>
+                        </div>
+                        <h4>Live Lounge Performance & Interview</h4>
+                        <p>Planet Colony artist The Echoes performed live and was interviewed on the UK's most popular radio show, reaching 2.8 million listeners.</p>
+                        <div class="coverage-date">
+                            <i class="far fa-calendar"></i> April 10, 2023
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title">Our Media Reach</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="stat-number">250+</div>
+                    <div class="stat-label">Media Partners</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-number">60+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">150M+</div>
+                    <div class="stat-label">Combined Reach</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Artists Featured</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Artist Testimonials</h2>
+            <p class="media-intro" style="color: #ccc;">Hear from artists who've gained exposure through our media network</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Being featured in Rolling Stone's 'Artists to Watch' list completely changed my career trajectory. Planet Colony made it happen with their media connections."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah K.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah K.</h4>
+                            <p>Indie Artist</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The Pitchfork review Planet Colony secured for my album led to label interest and my first tour booking. Their media relationships are invaluable."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David M.">
+                        </div>
+                        <div class="author-info">
+                            <h4>David M.</h4>
+                            <p>Electronic Producer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"After our BBC Radio 1 feature arranged by Planet Colony, our streams tripled overnight. They know exactly which media outlets will connect with our sound."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aisha B.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Aisha B.</h4>
+                            <p>Band Member</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready for Media Coverage?</h2>
+            <p>Let's get your music featured in top publications, blogs, and radio shows worldwide.</p>
+            <a href="#" class="btn">Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- Footer (Same as your main page) -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in entertainment, news, and technology since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="entertainment.html"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="promotion.html"><i class="fas fa-chevron-right"></i> Promotion</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Portfolio</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gaming Hub</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Podcast Network</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Streaming Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dev Tools</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile Apps</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle (Same as your main page)
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Media filter functionality
+        const mediaFilterBtns = document.querySelectorAll('.media-filter-btn');
+        const mediaCards = document.querySelectorAll('.media-card');
+        
+        mediaFilterBtns.forEach(btn => {
+            btn.addEventListener('click
+            
+            // Mobile Menu Toggle
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const closeMenu = document.querySelector('.close-menu');
+const overlay = document.querySelector('.overlay');
+
+hamburger.addEventListener('click', () => {
+    mobileMenu.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+});
+
+closeMenu.addEventListener('click', () => {
+    closeMobileMenu();
+});
+
+overlay.addEventListener('click', () => {
+    closeMobileMenu();
+});
+
+function closeMobileMenu() {
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            // Close mobile menu if open
+            closeMobileMenu();
+            
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Media filter functionality
+const mediaFilterBtns = document.querySelectorAll('.media-filter-btn');
+const mediaCards = document.querySelectorAll('.media-card');
+
+mediaFilterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        mediaFilterBtns.forEach(b => b.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        const filterType = this.dataset.type;
+        
+        // Filter media cards
+        mediaCards.forEach(card => {
+            if (filterType === 'all' || card.dataset.type === filterType) {
+                card.style.display = 'block';
+                card.style.animation = 'fadeIn 0.5s ease';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Animated counter for statistics
+const statNumbers = document.querySelectorAll('.stats-section .stat-number');
+const statsSection = document.querySelector('.stats-section');
+
+function animateStats() {
+    const rect = statsSection.getBoundingClientRect();
+    const isVisible = (rect.top <= window.innerHeight * 0.75) &&
+        (rect.bottom >= window.innerHeight * 0.25);
+    
+    if (isVisible) {
+        statNumbers.forEach(number => {
+            const target = parseInt(number.textContent.replace(/[+,]/g, ''));
+            const suffix = number.textContent.match(/[+,]/g) ? number.textContent.match(/[+,]/g)[0] : '';
+            const duration = 2000; // Animation duration in ms
+            const start = 0;
+            const increment = target / (duration / 16); // 60fps
+            
+            let current = start;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    clearInterval(timer);
+                    current = target;
+                }
+                number.textContent = Math.floor(current).toLocaleString() + suffix;
+            }, 16);
+        });
+        
+        // Remove event listener after animation
+        window.removeEventListener('scroll', animateStats);
+    }
+}
+
+// Run animation when stats section is in view
+window.addEventListener('scroll', animateStats);
+
+// Initialize with all media cards visible
+document.addEventListener('DOMContentLoaded', () => {
+    mediaCards.forEach(card => {
+        card.style.display = 'block';
+    });
+    
+    // Trigger stats animation if stats section is already in view
+    const rect = statsSection.getBoundingClientRect();
+    if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+        animateStats();
+    }
+});
+
+// Portfolio dropdown functionality
+const portfolioMenu = document.querySelector('.portfolio-menu');
+const portfolioDropdown = document.querySelector('.portfolio-dropdown');
+
+portfolioMenu.addEventListener('mouseenter', () => {
+    portfolioDropdown.style.opacity = '1';
+    portfolioDropdown.style.visibility = 'visible';
+    portfolioDropdown.style.transform = 'translateY(0)';
+});
+
+portfolioMenu.addEventListener('mouseleave', () => {
+    portfolioDropdown.style.opacity = '0';
+    portfolioDropdown.style.visibility = 'hidden';
+    portfolioDropdown.style.transform = 'translateY(10px)';
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    if (!portfolioMenu.contains(e.target)) {
+        portfolioDropdown.style.opacity = '0';
+        portfolioDropdown.style.visibility = 'hidden';
+        portfolioDropdown.style.transform = 'translateY(10px)';
+    }
+});
+
+// Media card hover effects
+mediaCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        const logo = card.querySelector('.media-logo img');
+        logo.style.filter = 'grayscale(0%)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        const logo = card.querySelector('.media-logo img');
+        logo.style.filter = 'grayscale(100%)';
+    });
+});
+
+// Coverage card interaction
+const coverageCards = document.querySelectorAll('.coverage-card');
+coverageCards.forEach(card => {
+    card.addEventListener('click', () => {
+        const title = card.querySelector('h4').textContent;
+        const source = card.querySelector('.source-name').textContent;
+        alert(`Viewing coverage: ${title} on ${source}`);
+    });
+});
+
+// Testimonial card animation
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+testimonialCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    
+    setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+    }, 300 + (index * 150));
+});
+
+// Add CSS animation keyframes dynamically
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+`;
+document.head.appendChild(style);

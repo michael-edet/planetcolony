@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Distribution Plans | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(29, 181, 84, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        /* Plans Section */
+        .plans-section {
+            background-color: var(--light-gray);
+        }
+        
+        .plans-intro {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        
+        .plans-intro p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .plan-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-header {
+            padding: 30px;
+            text-align: center;
+            background-color: var(--light-gray);
+        }
+        
+        .plan-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: #666;
+        }
+        
+        .plan-duration {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .plan-features {
+            padding: 30px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .plan-tag {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background-color: var(--accent-green);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+            width: 120px;
+            text-align: center;
+        }
+        
+        .pro-plan .plan-header {
+            background-color: var(--primary-black);
+            color: var(--white);
+        }
+        
+        .standard-plan .plan-header {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        .basic-plan .plan-header {
+            background-color: var(--light-green);
+            color: var(--white);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th, 
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary-black);
+            color: var(--white);
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+        
+        .comparison-table .feature-name {
+            font-weight: 600;
+            width: 30%;
+        }
+        
+        .comparison-table i.fa-check {
+            color: var(--accent-green);
+        }
+        
+        .comparison-table i.fa-times {
+            color: #ff4d4d;
+        }
+        
+        .faq-section {
+            background-color: var(--white);
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background-color: var(--light-gray);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Plans Section -->
+    <section class="section plans-section">
+        <div class="container">
+            <h2 class="section-title">Choose Your Distribution Plan</h2>
+            
+            <div class="plans-intro">
+                <p>Select the perfect plan for your music career. Whether you're just starting out or ready to go pro, we have a solution tailored for you.</p>
+            </div>
+            
+            <div class="plans-grid">
+                <!-- Basic Plan -->
+                <div class="plan-card basic-plan">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Basic Plan</h3>
+                        <div class="plan-price">$4.99<span>/month</span></div>
+                        <p class="plan-duration">Billed annually at $59.88</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Distribute to 50+ platforms</li>
+                            <li><i class="fas fa-check"></i> 10 releases per year</li>
+                            <li><i class="fas fa-check"></i> Basic analytics dashboard</li>
+                            <li><i class="fas fa-check"></i> Keep 85% of royalties</li>
+                            <li><i class="fas fa-check"></i> 24-48 hour release time</li>
+                            <li><i class="fas fa-times"></i> No YouTube Content ID</li>
+                            <li><i class="fas fa-times"></i> No playlist pitching</li>
+                            <li><i class="fas fa-times"></i> No sync licensing</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline" data-plan="basic">Select Basic Plan</a>
+                    </div>
+                </div>
+                
+                <!-- Standard Plan -->
+                <div class="plan-card standard-plan">
+                    <div class="plan-tag">MOST POPULAR</div>
+                    <div class="plan-header">
+                        <h3 class="plan-name">Standard Plan</h3>
+                        <div class="plan-price">$9.99<span>/month</span></div>
+                        <p class="plan-duration">Billed annually at $119.88</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Distribute to 100+ platforms</li>
+                            <li><i class="fas fa-check"></i> Unlimited releases</li>
+                            <li><i class="fas fa-check"></i> Advanced analytics</li>
+                            <li><i class="fas fa-check"></i> Keep 90% of royalties</li>
+                            <li><i class="fas fa-check"></i> 24-hour release time</li>
+                            <li><i class="fas fa-check"></i> YouTube Content ID</li>
+                            <li><i class="fas fa-check"></i> Basic playlist pitching</li>
+                            <li><i class="fas fa-times"></i> Limited sync licensing</li>
+                        </ul>
+                        <a href="#" class="btn" data-plan="standard">Select Standard Plan</a>
+                    </div>
+                </div>
+                
+                <!-- Pro Plan -->
+                <div class="plan-card pro-plan">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Pro Plan</h3>
+                        <div class="plan-price">$19.99<span>/month</span></div>
+                        <p class="plan-duration">Billed annually at $239.88</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Distribute to 150+ platforms</li>
+                            <li><i class="fas fa-check"></i> Unlimited premium releases</li>
+                            <li><i class="fas fa-check"></i> Pro analytics dashboard</li>
+                            <li><i class="fas fa-check"></i> Keep 95% of royalties</li>
+                            <li><i class="fas fa-check"></i> Same-day release time</li>
+                            <li><i class="fas fa-check"></i> YouTube Content ID+</li>
+                            <li><i class="fas fa-check"></i> Premium playlist pitching</li>
+                            <li><i class="fas fa-check"></i> Full sync licensing</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline" data-plan="pro">Select Pro Plan</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feature Comparison Table -->
+            <h3 class="section-title" style="margin-top: 80px;">Plan Comparison</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Basic</th>
+                        <th>Standard</th>
+                        <th>Pro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature-name">Platform Distribution</td>
+                        <td>50+</td>
+                        <td>100+</td>
+                        <td>150+</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Annual Releases</td>
+                        <td>10</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited Premium</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Royalty Percentage</td>
+                        <td>85%</td>
+                        <td>90%</td>
+                        <td>95%</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Release Time</td>
+                        <td>24-48 hours</td>
+                        <td>24 hours</td>
+                        <td>Same-day</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">YouTube Content ID</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                        <td><i class="fas fa-check"></i> (Enhanced)</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Playlist Pitching</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-check"></i> (Basic)</td>
+                        <td><i class="fas fa-check"></i> (Premium)</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Sync Licensing</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-check"></i> (Limited)</td>
+                        <td><i class="fas fa-check"></i> (Full)</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Analytics</td>
+                        <td>Basic</td>
+                        <td>Advanced</td>
+                        <td>Pro Dashboard</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Priority Support</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td>Email</td>
+                        <td>24/7 Live Chat</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- FAQ Section -->
+            <h3 class="section-title" style="margin-top: 80px;">Frequently Asked Questions</h3>
+            
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What payment methods do you accept?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept all major credit cards (Visa, Mastercard, American Express), PayPal, and bank transfers for annual payments. All transactions are securely processed through our payment gateway.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I upgrade or downgrade my plan later?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can change your plan at any time. When upgrading, you'll be charged a prorated amount for the remaining period. Downgrades will take effect at your next billing cycle.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is there a contract or long-term commitment?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, all plans are month-to-month with no long-term contracts. You can cancel anytime, though we offer significant discounts for annual commitments.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does the royalty payment process work?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We collect royalties from all platforms and pay out monthly. Payments are made around the 15th of each month for earnings from the previous month. Minimum payout is $50 for PayPal and $100 for bank transfers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+                
+                // Close other open FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem && item.classList.contains('active')) {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Plan Selection Animation
+        document.querySelectorAll('[data-plan]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const plan = button.getAttribute('data-plan');
+                
+                // Animation effect
+                button.textContent = 'Selected!';
+                button.style.backgroundColor = '#15803d';
+                
+                // Scroll to top (simulate going to checkout)
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                
+                // In a real implementation, this would redirect to checkout
+                console.log(`Selected ${plan} plan`);
+                
+                // Reset button after animation
+                setTimeout(() => {
+                    button.innerHTML = `Select ${plan.charAt(0).toUpperCase() + plan.slice(1)} Plan`;
+                    button.style.backgroundColor = '';
+                }, 2000);
+            });
+        });
+        
+        // Highlight recommended plan on page load
+        window.addEventListener('load', () => {
+            const standardPlan = document.querySelector('.standard-plan');
+            standardPlan.style.transform = 'scale(1.02)';
+            standardPlan.style.boxShadow = '0 10px 25px rgba(29, 185, 84, 0.2)';
+            
+            setTimeout(() => {
+                standardPlan.style.transform = '';
+                standardPlan.style.boxShadow = '';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

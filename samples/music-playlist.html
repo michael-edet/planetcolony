@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Playlists | Planet Colony</title>
+    <<link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --header-height: 80px;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: var(--header-height);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 181, 84, 0.3);
+        }
+        
+        /* Playlist Hero Section */
+        .playlist-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .playlist-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .playlist-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .playlist-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        /* Playlist Platform Navigation */
+        .platform-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .platform-btn {
+            padding: 12px 25px;
+            background-color: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .platform-btn.active, .platform-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-color: var(--accent-green);
+        }
+        
+        .platform-btn i {
+            font-size: 1.2rem;
+        }
+        
+        /* Playlist Sections */
+        .playlist-section {
+            margin-bottom: 60px;
+            display: none;
+        }
+        
+        .playlist-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .playlist-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .playlist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .playlist-cover {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .playlist-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .playlist-card:hover .playlist-cover img {
+            transform: scale(1.05);
+        }
+        
+        .playlist-platform-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .playlist-platform-badge i {
+            font-size: 1rem;
+        }
+        
+        .playlist-info {
+            padding: 25px;
+        }
+        
+        .playlist-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+        }
+        
+        .playlist-info p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .playlist-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .playlist-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            background-color: var(--primary-black);
+            color: var(--white);
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .playlist-link:hover {
+            background-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        
+        /* Platform Colors */
+        .spotify { color: #1DB954; }
+        .audiomack { color: #FFA200; }
+        .boomplay { color: #00C4FF; }
+        .youtube { color: #FF0000; }
+        .soundcloud { color: #FF3300; }
+        
+        /* Platform Backgrounds */
+        .spotify-bg { background-color: #1DB954; }
+        .audiomack-bg { background-color: #FFA200; }
+        .boomplay-bg { background-color: #00C4FF; }
+        .youtube-bg { background-color: #FF0000; }
+        .soundcloud-bg { background-color: #FF3300; }
+        
+        /* Stats Overview Section */
+        .stats-overview {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+            margin: 60px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--accent-green);
+        }
+        
+        .stat-card .stat-number {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 1rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .playlist-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .playlist-hero p {
+                font-size: 1rem;
+            }
+            
+            .platform-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .platform-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .playlist-hero {
+                height: 60vh;
+            }
+            
+            .playlist-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                    <li><a href="promotion.html">Promotion</a></li>
+                    <li><a href="#" class="active">Playlists</a></li>
+                </ul>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="entertainment.html"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="promotion.html"><i class="fas fa-bullhorn"></i> Promotion</a></li>
+                <li><a href="#" class="active"><i class="fas fa-list-music"></i> Playlists</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="playlist-hero">
+        <div class="container playlist-hero-content">
+            <h1>Planet Colony Playlists</h1>
+            <p>Discover our curated music collections across all major platforms, reaching millions of listeners worldwide</p>
+            <a href="#playlists" class="btn">Explore Playlists</a>
+        </div>
+    </section>
+
+    <!-- Playlist Platform Navigation -->
+    <section class="section" id="playlists">
+        <div class="container">
+            <h2 class="section-title">Our Playlist Network</h2>
+            
+            <div class="platform-nav">
+                <button class="platform-btn active" data-platform="spotify">
+                    <i class="fab fa-spotify spotify"></i> Spotify
+                </button>
+                <button class="platform-btn" data-platform="audiomack">
+                    <i class="fas fa-music audiomack"></i> Audiomack
+                </button>
+                <button class="platform-btn" data-platform="boomplay">
+                    <i class="fas fa-play-circle boomplay"></i> Boomplay
+                </button>
+                <button class="platform-btn" data-platform="youtube">
+                    <i class="fab fa-youtube youtube"></i> YouTube Music
+                </button>
+                <button class="platform-btn" data-platform="soundcloud">
+                    <i class="fab fa-soundcloud soundcloud"></i> SoundCloud
+                </button>
+            </div>
+            
+            <!-- Spotify Playlists -->
+            <div class="playlist-section active" id="spotify-playlists">
+                <h3 class="subsection-title">Spotify Playlists</h3>
+                <div class="playlist-grid">
+                    <!-- Afro Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Afro Planet">
+                            <div class="playlist-platform-badge spotify-bg">
+                                <i class="fab fa-spotify"></i> Spotify
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Afro Planet</h3>
+                            <p>The hottest Afrobeat tracks from across the continent and diaspora. Updated weekly with fresh vibes.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">125K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">85</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2.4M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">45</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://spotify.com/playlist/afroplanet" class="playlist-link" target="_blank">Listen on Spotify</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Radio Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Radio Planet">
+                            <div class="playlist-platform-badge spotify-bg">
+                                <i class="fab fa-spotify"></i> Spotify
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Radio Planet</h3>
+                            <p>Eclectic mix of current hits and timeless classics across all genres. Your daily soundtrack.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">320K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">150</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">5.7M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">62</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://spotify.com/playlist/radioplanet" class="playlist-link" target="_blank">Listen on Spotify</a>
+                        </div>
+                    </div>
+                    
+                    <!-- HipHop Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="HipHop Planet">
+                            <div class="playlist-platform-badge spotify-bg">
+                                <i class="fab fa-spotify"></i> Spotify
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>HipHop Planet</h3>
+                            <p>From underground rap to chart-topping hip-hop. The culture's best new releases.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">280K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">75</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">4.2M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">58</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://spotify.com/playlist/hiphopplanet" class="playlist-link" target="_blank">Listen on Spotify</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Gospel Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Gospel Planet">
+                            <div class="playlist-platform-badge spotify-bg">
+                                <i class="fab fa-spotify"></i> Spotify
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Gospel Planet</h3>
+                            <p>Uplifting gospel music from traditional hymns to contemporary worship.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">95K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">60</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1.8M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">35</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://spotify.com/playlist/gospelplanet" class="playlist-link" target="_blank">Listen on Spotify</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Music Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Music Planet">
+                            <div class="playlist-platform-badge spotify-bg">
+                                <i class="fab fa-spotify"></i> Spotify
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Music Planet</h3>
+                            <p>Global sounds from every corner of the world. A celebration of musical diversity.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">180K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">100</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3.1M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">72</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://spotify.com/playlist/musicplanet" class="playlist-link" target="_blank">Listen on Spotify</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Audiomack Playlists -->
+            <div class="playlist-section" id="audiomack-playlists">
+                <h3 class="subsection-title">Audiomack Playlists</h3>
+                <div class="playlist-grid">
+                    <!-- Afro Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Afro Planet">
+                            <div class="playlist-platform-badge audiomack-bg">
+                                <i class="fas fa-music"></i> Audiomack
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Afro Planet</h3>
+                            <p>The hottest Afrobeat tracks from across the continent and diaspora. Updated weekly with fresh vibes.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">85K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">75</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1.2M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">38</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://audiomack.com/playlist/afroplanet" class="playlist-link" target="_blank">Listen on Audiomack</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Radio Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Radio Planet">
+                            <div class="playlist-platform-badge audiomack-bg">
+                                <i class="fas fa-music"></i> Audiomack
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Radio Planet</h3>
+                            <p>Eclectic mix of current hits and timeless classics across all genres. Your daily soundtrack.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">150K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">120</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2.8M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">45</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://audiomack.com/playlist/radioplanet" class="playlist-link" target="_blank">Listen on Audiomack</a>
+                        </div>
+                    </div>
+                    
+                    <!-- HipHop Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="HipHop Planet">
+                            <div class="playlist-platform-badge audiomack-bg">
+                                <i class="fas fa-music"></i> Audiomack
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>HipHop Planet</h3>
+                            <p>From underground rap to chart-topping hip-hop. The culture's best new releases.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">210K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">65</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3.5M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">52</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://audiomack.com/playlist/hiphopplanet" class="playlist-link" target="_blank">Listen on Audiomack</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Gospel Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Gospel Planet">
+                            <div class="playlist-platform-badge audiomack-bg">
+                                <i class="fas fa-music"></i> Audiomack
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Gospel Planet</h3>
+                            <p>Uplifting gospel music from traditional hymns to contemporary worship.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">65K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">50</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">950K</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">28</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://audiomack.com/playlist/gospelplanet" class="playlist-link" target="_blank">Listen on Audiomack</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Music Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Music Planet">
+                            <div class="playlist-platform-badge audiomack-bg">
+                                <i class="fas fa-music"></i> Audiomack
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Music Planet</h3>
+                            <p>Global sounds from every corner of the world. A celebration of musical diversity.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">120K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">90</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2.1M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">60</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://audiomack.com/playlist/musicplanet" class="playlist-link" target="_blank">Listen on Audiomack</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Boomplay Playlists -->
+            <div class="playlist-section" id="boomplay-playlists">
+                <h3 class="subsection-title">Boomplay Playlists</h3>
+                <div class="playlist-grid">
+                    <!-- Afro Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Afro Planet">
+                            <div class="playlist-platform-badge boomplay-bg">
+                                <i class="fas fa-play-circle"></i> Boomplay
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Afro Planet</h3>
+                            <p>The hottest Afrobeat tracks from across the continent and diaspora. Updated weekly with fresh vibes.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">150K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">80</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3.5M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">42</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://boomplay.com/playlist/afroplanet" class="playlist-link" target="_blank">Listen on Boomplay</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Radio Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Radio Planet">
+                            <div class="playlist-platform-badge boomplay-bg">
+                                <i class="fas fa-play-circle"></i> Boomplay
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Radio Planet</h3>
+                            <p>Eclectic mix of current hits and timeless classics across all genres. Your daily soundtrack.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">280K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">140</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">6.2M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">55</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://boomplay.com/playlist/radioplanet" class="playlist-link" target="_blank">Listen on Boomplay</a>
+                        </div>
+                    </div>
+                    
+                    <!-- HipHop Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="HipHop Planet">
+                            <div class="playlist-platform-badge boomplay-bg">
+                                <i class="fas fa-play-circle"></i> Boomplay
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>HipHop Planet</h3>
+                            <p>From underground rap to chart-topping hip-hop. The culture's best new releases.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">320K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">70</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">5.8M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">60</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://boomplay.com/playlist/hiphopplanet" class="playlist-link" target="_blank">Listen on Boomplay</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Gospel Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Gospel Planet">
+                            <div class="playlist-platform-badge boomplay-bg">
+                                <i class="fas fa-play-circle"></i> Boomplay
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Gospel Planet</h3>
+                            <p>Uplifting gospel music from traditional hymns to contemporary worship.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">110K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">55</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2.3M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">32</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://boomplay.com/playlist/gospelplanet" class="playlist-link" target="_blank">Listen on Boomplay</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Music Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Music Planet">
+                            <div class="playlist-platform-badge boomplay-bg">
+                                <i class="fas fa-play-circle"></i> Boomplay
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Music Planet</h3>
+                            <p>Global sounds from every corner of the world. A celebration of musical diversity.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">200K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">95</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3.9M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">65</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://boomplay.com/playlist/musicplanet" class="playlist-link" target="_blank">Listen on Boomplay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- YouTube Music Playlists -->
+            <div class="playlist-section" id="youtube-playlists">
+                <h3 class="subsection-title">YouTube Music Playlists</h3>
+                <div class="playlist-grid">
+                    <!-- Afro Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Afro Planet">
+                            <div class="playlist-platform-badge youtube-bg">
+                                <i class="fab fa-youtube"></i> YouTube Music
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Afro Planet</h3>
+                            <p>The hottest Afrobeat tracks from across the continent and diaspora. Updated weekly with fresh vibes.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">95K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">70</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1.8M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">40</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://music.youtube.com/playlist/afroplanet" class="playlist-link" target="_blank">Listen on YouTube Music</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Radio Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Radio Planet">
+                            <div class="playlist-platform-badge youtube-bg">
+                                <i class="fab fa-youtube"></i> YouTube Music
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Radio Planet</h3>
+                            <p>Eclectic mix of current hits and timeless classics across all genres. Your daily soundtrack.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">180K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">130</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3.2M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">50</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://music.youtube.com/playlist/radioplanet" class="playlist-link" target="_blank">Listen on YouTube Music</a>
+                        </div>
+                    </div>
+                    
+                    <!-- HipHop Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="HipHop Planet">
+                            <div class="playlist-platform-badge youtube-bg">
+                                <i class="fab fa-youtube"></i> YouTube Music
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>HipHop Planet</h3>
+                            <p>From underground rap to chart-topping hip-hop. The culture's best new releases.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">240K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">65</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">4.5M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">55</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://music.youtube.com/playlist/hiphopplanet" class="playlist-link" target="_blank">Listen on YouTube Music</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Gospel Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Gospel Planet">
+                            <div class="playlist-platform-badge youtube-bg">
+                                <i class="fab fa-youtube"></i> YouTube Music
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Gospel Planet</h3>
+                            <p>Uplifting gospel music from traditional hymns to contemporary worship.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">75K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">50</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1.5M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">30</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://music.youtube.com/playlist/gospelplanet" class="playlist-link" target="_blank">Listen on YouTube Music</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Music Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Music Planet">
+                            <div class="playlist-platform-badge youtube-bg">
+                                <i class="fab fa-youtube"></i> YouTube Music
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Music Planet</h3>
+                            <p>Global sounds from every corner of the world. A celebration of musical diversity.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">160K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">85</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2.8M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">60</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://music.youtube.com/playlist/musicplanet" class="playlist-link" target="_blank">Listen on YouTube Music</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SoundCloud Playlists -->
+            <div class="playlist-section" id="soundcloud-playlists">
+                <h3 class="subsection-title">SoundCloud Playlists</h3>
+                <div class="playlist-grid">
+                    <!-- Afro Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Afro Planet">
+                            <div class="playlist-platform-badge soundcloud-bg">
+                                <i class="fab fa-soundcloud"></i> SoundCloud
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Afro Planet</h3>
+                            <p>The hottest Afrobeat tracks from across the continent and diaspora. Updated weekly with fresh vibes.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">80K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">65</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1.5M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">35</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://soundcloud.com/playlist/afroplanet" class="playlist-link" target="_blank">Listen on SoundCloud</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Radio Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Radio Planet">
+                            <div class="playlist-platform-badge soundcloud-bg">
+                                <i class="fab fa-soundcloud"></i> SoundCloud
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Radio Planet</h3>
+                            <p>Eclectic mix of current hits and timeless classics across all genres. Your daily soundtrack.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">140K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">110</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2.7M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">45</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://soundcloud.com/playlist/radioplanet" class="playlist-link" target="_blank">Listen on SoundCloud</a>
+                        </div>
+                    </div>
+                    
+                    <!-- HipHop Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="HipHop Planet">
+                            <div class="playlist-platform-badge soundcloud-bg">
+                                <i class="fab fa-soundcloud"></i> SoundCloud
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>HipHop Planet</h3>
+                            <p>From underground rap to chart-topping hip-hop. The culture's best new releases.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">190K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">60</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3.8M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">50</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://soundcloud.com/playlist/hiphopplanet" class="playlist-link" target="_blank">Listen on SoundCloud</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Gospel Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Gospel Planet">
+                            <div class="playlist-platform-badge soundcloud-bg">
+                                <i class="fab fa-soundcloud"></i> SoundCloud
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Gospel Planet</h3>
+                            <p>Uplifting gospel music from traditional hymns to contemporary worship.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">55K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">45</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1.2M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">25</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://soundcloud.com/playlist/gospelplanet" class="playlist-link" target="_blank">Listen on SoundCloud</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Music Planet -->
+                    <div class="playlist-card">
+                        <div class="playlist-cover">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Music Planet">
+                            <div class="playlist-platform-badge soundcloud-bg">
+                                <i class="fab fa-soundcloud"></i> SoundCloud
+                            </div>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Music Planet</h3>
+                            <p>Global sounds from every corner of the world. A celebration of musical diversity.</p>
+                            
+                            <div class="playlist-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">130K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">80</div>
+                                    <div class="stat-label">Tracks</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2.5M</div>
+                                    <div class="stat-label">Monthly Streams</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">55</div>
+                                    <div class="stat-label">Countries</div>
+                                </div>
+                            </div>
+                            
+                            <a href="https://soundcloud.com/playlist/musicplanet" class="playlist-link" target="_blank">Listen on SoundCloud</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Overview Section -->
+    <section class="stats-overview">
+        <div class="container">
+            <h2 class="section-title">Our Playlist Network by Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">25</div>
+                    <div class="stat-label">Total Playlists</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Platforms</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">2.8M+</div>
+                    <div class="stat-label">Combined Followers</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">45M+</div>
+                    <div class="stat-label">Monthly Streams</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in entertainment, news, and technology since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="entertainment.html"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="promotion.html"><i class="fas fa-chevron-right"></i> Promotion</a></li>
+                        <li><a href="#" class="active"><i class="fas fa-chevron-right"></i> Playlists</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Our Playlists</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Afro Planet</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Radio Planet</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> HipHop Planet</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gospel Planet</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Music Planet</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Platform Navigation
+        const platformBtns = document.querySelectorAll('.platform-btn');
+        const playlistSections = document.querySelectorAll('.playlist-section');
+        
+        platformBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons and sections
+                platformBtns.forEach(b => b.classList.remove('active'));
+                playlistSections.forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const platform = this.getAttribute('data-platform');
+                document.getElementById(`${platform}-playlists`).classList.add('active');
+            });
+        });
+        
+        // Animate stats counters
+        const statNumbers = document.querySelectorAll('.stats-grid .stat-number');
+        const statsSection = document.querySelector('.stats-overview');
+        
+        function animateStats() {
+            const rect = statsSection.getBoundingClientRect();
+            const isVisible = (rect.top <= window.innerHeight * 0.75) && 
+                              (rect.bottom >= window.innerHeight * 0.25);
+            
+            if (isVisible) {
+                statNumbers.forEach(number => {
+                    const target = parseInt(number.textContent.replace(/[+,]/g, ''));
+                    const suffix = number.textContent.match(/[+,]/g) ? number.textContent.match(/[+,]/g)[0] : '';
+                    const duration = 2000; // Animation duration in ms
+                    const start = 0;
+                    const increment = target / (duration / 16); // 60fps
+                    
+                    let current = start;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            clearInterval(timer);
+                            current = target;
+                        }
+                        number.textContent = Math.floor(current).toLocaleString() + suffix;
+                    }, 16);
+                });
+                
+                // Remove event listener after animation
+                window.removeEventListener('scroll', animateStats);
+            }
+        }
+        
+        // Run animation when stats section is in view
+        window.addEventListener('scroll', animateStats);
+        
+        // Playlist card hover effects
+        const playlistCards = document.querySelectorAll('.playlist-card');
+        
+        playlistCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const cover = this.querySelector('.playlist-cover img');
+                cover.style.transform = 'scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const cover = this.querySelector('.playlist-cover img');
+                cover.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --header-height: 80px;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: var(--header-height);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(29, 181, 84, 0.3);
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            height: var(--header-height);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-black);
+        }
+        
+        .logo span {
+            color: var(--accent-green);
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            margin-right: 30px;
+        }
+        
+        .nav-list li {
+            margin: 0 15px;
+        }
+        
+        .nav-list a {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-green);
+            transition: width 0.3s;
+        }
+        
+        .nav-list a:hover {
+            color: var(--accent-green);
+        }
+        
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-black);
+        }
+        
+        .portfolio-menu {
+            position: relative;
+        }
+        
+        .portfolio-btn {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .portfolio-btn:hover {
+            background-color: var(--accent-green);
+        }
+        
+        .portfolio-btn i {
+            margin-left: 5px;
+        }
+        
+        .portfolio-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .portfolio-menu:hover .portfolio-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .portfolio-dropdown h3 {
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .portfolio-dropdown li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .portfolio-dropdown li:last-child {
+            border-bottom: none;
+        }
+        
+        .portfolio-dropdown a {
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .portfolio-dropdown a:hover {
+            color: var(--accent-green);
+        }
+        
+        .portfolio-dropdown i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--primary-black);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-content {
+            position: relative;
+            height: 100%;
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu ul {
+            margin-top: 50px;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-menu a {
+            color: var(--white);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .mobile-menu a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--accent-green);
+        }
+        
+        .menu-title {
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-green);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1500;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Post Detail Styles */
+        .post-header {
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .post-title {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            color: var(--primary-black);
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            color: #666;
+            flex-wrap: wrap;
+        }
+        
+        .post-meta span {
+            margin: 0 20px 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-meta i {
+            margin-right: 8px;
+            color: var(--accent-green);
+        }
+        
+        .post-image {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post-content {
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        
+        .post-content p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+        
+        .post-content h2 {
+            font-size: 2rem;
+            margin: 50px 0 25px;
+            color: var(--primary-black);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .post-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-green);
+            border-radius: 2px;
+        }
+        
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 40px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post-content blockquote {
+            border-left: 4px solid var(--accent-green);
+            padding-left: 30px;
+            margin: 40px 0;
+            font-style: italic;
+            color: #555;
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 50px 0;
+        }
+        
+        .tag {
+            background-color: var(--light-green);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 10px 15px;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(29, 185, 84, 0.2);
+        }
+        
+        .author-card {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 80px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .author-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--accent-green);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-right: 40px;
+            flex-shrink: 0;
+        }
+        
+        .author-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .author-info p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--white);
+            color: var(--primary-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        /* Related Posts */
+        .related-posts {
+            margin-top: 100px;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .related-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            border: 1px solid var(--medium-gray);
+        }
+        
+        .related-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(29, 185, 84, 0.15);
+            border-color: var(--accent-green);
+        }
+        
+        .related-img {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .related-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .related-card:hover .related-img img {
+            transform: scale(1.05);
+        }
+        
+        .related-content {
+            padding: 25px;
+        }
+        
+        .related-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+        
+        .related-content p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .newsletter .section-title {
+            color: var(--white);
+        }
+        
+        .newsletter .section-title::after {
+            background-color: var(--accent-green);
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 30px 30px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--dark-green);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-green);
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+        
+        .social-links-footer {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links-footer a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+        
+        .social-links-footer a:hover {
+            background-color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .post-title {
+                font-size: 2.4rem;
+            }
+            
+            .post-image {
+                height: 450px;
+            }
+            
+            .author-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .author-avatar {
+                margin-right: 0;
+                margin-bottom: 25px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list,
+            .portfolio-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .post-title {
+                font-size: 2rem;
+            }
+            
+            .post-image {
+                height: 350px;
+            }
+            
+            .post-content h2 {
+                font-size: 1.6rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .post-title {
+                font-size: 1.8rem;
+            }
+            
+            .post-image {
+                height: 250px;
+            }
+            
+            .post-meta span {
+                margin: 0 10px 10px;
+            }
+            
+            .author-card {
+                padding: 30px;
+            }
+            
+            .author-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="entertainment.html"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="technology.html"><i class="fas fa-microchip"></i> Technology</a></li>
+                <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Post Detail Section -->
+    <section class="section">
+        <div class="container">
+            <article class="post-content">
+                <div class="post-header">
+                    <h1 class="post-title">Revolutionary AI Breakthrough Promises to Transform Healthcare</h1>
+                    <div class="post-meta">
+                        <span><i class="far fa-user"></i> By Sarah Johnson</span>
+                        <span><i class="far fa-calendar"></i> June 15, 2023</span>
+                        <span><i class="far fa-clock"></i> 8 min read</span>
+                        <span><i class="far fa-eye"></i> 12.4K views</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="AI in Healthcare" class="post-image">
+                </div>
+                
+                <p>Researchers at NeuroTech Labs have developed an artificial intelligence system capable of diagnosing complex diseases with 98% accuracy, potentially revolutionizing the healthcare industry. This breakthrough comes after five years of intensive research and clinical trials involving over 50 medical institutions worldwide.</p>
+                
+                <h2>The Technology Behind the Breakthrough</h2>
+                
+                <p>The new AI system, called MediScan AI, uses advanced deep learning algorithms combined with quantum computing principles to analyze medical imaging, patient history, and real-time biometric data. Unlike previous systems that focused on single modalities, MediScan integrates multiple data sources to provide comprehensive diagnostic assessments.</p>
+                
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="AI Technology">
+                
+                <blockquote>
+                    "What sets our system apart is its ability to recognize patterns across completely different types of medical data. It can correlate subtle changes in a brain scan with minute variations in blood chemistry that would be nearly impossible for human doctors to connect."
+                    <cite>- Dr. Lisa Chen, Lead Researcher at NeuroTech Labs</cite>
+                </blockquote>
+                
+                <h2>Clinical Trial Results</h2>
+                
+                <p>In extensive clinical trials involving over 10,000 patients across 15 hospitals, MediScan AI demonstrated remarkable accuracy:</p>
+                
+                <ul>
+                    <li>98.2% accuracy in early-stage cancer detection (compared to 85% for human specialists)</li>
+                    <li>97.6% accuracy in predicting cardiovascular events within 6 months</li>
+                    <li>96.8% accuracy in diagnosing rare neurological disorders</li>
+                    <li>95.4% accuracy in identifying drug interactions</li>
+                </ul>
+                
+                <p>Perhaps most impressively, the system reduced diagnostic errors by 72% compared to traditional methods in the trial settings. It also decreased the average time to diagnosis from 14 days to just 3 hours for complex cases.</p>
+                
+                <h2>Potential Impact on Healthcare</h2>
+                
+                <p>The implications of this technology are profound. In rural areas with limited access to specialists, MediScan could provide expert-level diagnostics. For overworked medical staff, it offers a powerful second opinion that never tires. The system also continuously learns from each case it analyzes, becoming more accurate over time.</p>
+                
+                <img src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Healthcare Impact">
+                
+                <p>However, the researchers emphasize that the AI is designed to assist doctors, not replace them. "This is about augmenting human expertise, not replacing it," says Dr. Chen. "The AI handles pattern recognition at superhuman levels, while doctors provide the human touch, patient communication, and final decision-making."</p>
+                
+                <p>Early adopters of the technology report significant improvements in patient outcomes. Massachusetts General Hospital, one of the trial sites, saw a 40% reduction in misdiagnoses and a 30% improvement in treatment success rates during the testing period.</p>
+                
+                <div class="post-tags">
+                    <a href="#" class="tag">Technology</a>
+                    <a href="#" class="tag">Healthcare</a>
+                    <a href="#" class="tag">AI</a>
+                    <a href="#" class="tag">Innovation</a>
+                    <a href="#" class="tag">Medicine</a>
+                </div>
+                
+                <div class="author-card">
+                    <div class="author-avatar">SJ</div>
+                    <div class="author-info">
+                        <h3>Sarah Johnson</h3>
+                        <p>Senior Technology Correspondent with over 10 years of experience covering breakthroughs in AI and healthcare technology. Sarah holds a Master's degree in Science Journalism from Columbia University and has won multiple awards for her investigative reporting on medical innovations.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fas fa-globe"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <section class="related-posts">
+                <h2 class="section-title">You May Also Like</h2>
+                <div class="related-grid">
+                    <article class="related-card">
+                        <div class="related-img">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Related Post">
+                        </div>
+                        <div class="related-content">
+                            <h3>How Quantum Computing is Changing Medical Research</h3>
+                            <p>Discover how quantum processors are solving medical problems previously thought impossible to crack.</p>
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+                    
+                    <article class="related-card">
+                        <div class="related-img">
+                            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Related Post">
+                        </div>
+                        <div class="related-content">
+                            <h3>The Future of Telemedicine Post-Pandemic</h3>
+                            <p>Exploring how virtual healthcare has evolved and what's next for remote medical services.</p>
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+                    
+                    <article class="related-card">
+                        <div class="related-img">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Related Post">
+                        </div>
+                        <div class="related-content">
+                            <h3>Robotic Surgery: Precision at Microscopic Levels</h3>
+                            <p>The latest advancements in surgical robots that are making procedures safer and more precise.</p>
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="section-title">Stay Updated</h2>
+            <p>Subscribe to our newsletter for the latest in technology, science, and innovation delivered straight to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in technology, science, and innovation since 2018.</p>
+                    <div class="social-links-footer">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="entertainment.html"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="news.html"><i class="fas fa-chevron-right"></i> News</a></li>
+                        <li><a href="technology.html"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                        <li><a href="community.html"><i class="fas fa-chevron-right"></i> Community</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Portfolio</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gaming Hub</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Podcast Network</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Streaming Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dev Tools</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile Apps</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Sticky header effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('sticky', window.scrollY > 100);
+        });
+        
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const emailInput = newsletterForm.querySelector('input[type="email"]');
+                if (emailInput.value) {
+                    alert(`Thank you for subscribing with ${emailInput.value}! You'll receive our next update soon.`);
+                    emailInput.value = '';
+                }
+            });
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const portfolioMenu = document.querySelector('.portfolio-menu');
+            if (!portfolioMenu.contains(e.target)) {
+                const dropdown = portfolioMenu.querySelector('.portfolio-dropdown');
+                dropdown.style.opacity = '0';
+                dropdown.style.visibility = 'hidden';
+                dropdown.style.transform = 'translateY(10px)';
+            }
+        });
+        
+        // Back to top button visibility
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // Portfolio dropdown hover effect
+        const portfolioBtn = document.querySelector('.portfolio-btn');
+        const portfolioDropdown = document.querySelector('.portfolio-dropdown');
+        
+        portfolioBtn.addEventListener('mouseenter', () => {
+            portfolioDropdown.style.opacity = '1';
+            portfolioDropdown.style.visibility = 'visible';
+            portfolioDropdown.style.transform = 'translateY(0)';
+        });
+        
+        portfolioBtn.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+                if (!portfolioDropdown.matches(':hover')) {
+                    portfolioDropdown.style.opacity = '0';
+                    portfolioDropdown.style.visibility = 'hidden';
+                    portfolioDropdown.style.transform = 'translateY(10px)';
+                }
+            }, 200);
+        });
+        
+        portfolioDropdown.addEventListener('mouseleave', () => {
+            portfolioDropdown.style.opacity = '0';
+            portfolioDropdown.style.visibility = 'hidden';
+            portfolioDropdown.style.transform = 'translateY(10px)';
+        });
+        
+        // Tag hover animation
+        const tags = document.querySelectorAll('.tag');
+        tags.forEach(tag => {
+            tag.addEventListener('mouseenter', () => {
+                tag.style.transform = 'translateY(-3px)';
+                tag.style.boxShadow = '0 5px 15px rgba(29, 185, 84, 0.3)';
+            });
+            
+            tag.addEventListener('mouseleave', () => {
+                tag.style.transform = 'translateY(0)';
+                tag.style.boxShadow = 'none';
+            });
+        });
+        
+        // Author card animation
+        const authorCard = document.querySelector('.author-card');
+        if (authorCard) {
+            authorCard.addEventListener('mouseenter', () => {
+                authorCard.style.transform = 'translateY(-5px)';
+                authorCard.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.15)';
+            });
+            
+            authorCard.addEventListener('mouseleave', () => {
+                authorCard.style.transform = 'translateY(0)';
+                authorCard.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
+            });
+        }
+        
+        // Related cards animation
+        const relatedCards = document.querySelectorAll('.related-card');
+        relatedCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+                card.style.boxShadow = '0 15px 35px rgba(29, 185, 84, 0.15)';
+                card.style.borderColor = 'var(--accent-green)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
+                card.style.borderColor = 'var(--medium-gray)';
+            });
+        });
+    </script>
+</body>
+</html>

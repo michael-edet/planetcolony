@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports | Planet Colony</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Sports Page Specific Styles */
+        .sports-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/sports-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 60px;
+        }
+        
+        .sports-hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .sports-hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .sports-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .sports-tab {
+            padding: 10px 25px;
+            background-color: var(--light-gray);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sports-tab.active {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        .sports-tab:hover:not(.active) {
+            background-color: var(--medium-gray);
+        }
+        
+        .sports-content {
+            display: none;
+        }
+        
+        .sports-content.active {
+            display: block;
+        }
+        
+        .featured-match {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .match-header {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .match-header h3 {
+            font-size: 1.3rem;
+        }
+        
+        .match-status {
+            background-color: var(--accent-green);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .match-details {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .team-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+        
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-align: center;
+        }
+        
+        .match-info {
+            grid-column: span 3;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--medium-gray);
+        }
+        
+        .match-time {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .match-venue {
+            color: #666;
+        }
+        
+        .sports-news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .sports-news-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .sports-news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .news-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .sports-news-card:hover .news-img img {
+            transform: scale(1.05);
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-category {
+            display: inline-block;
+            background-color: var(--light-green);
+            color: var(--white);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .news-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+        }
+        
+        .news-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .standings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .standings-table th {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .standings-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .standings-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .standings-table tr:hover {
+            background-color: rgba(29, 185, 84, 0.05);
+        }
+        
+        .team-cell {
+            display: flex;
+            align-items: center;
+        }
+        
+        .team-cell img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .highlight {
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+        
+        .video-highlights {
+            margin-bottom: 40px;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(29, 185, 84, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover .play-button {
+            background-color: var(--accent-green);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-info {
+            padding: 15px;
+        }
+        
+        .video-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+        }
+        
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .sports-hero {
+                height: 50vh;
+            }
+            
+            .sports-hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .match-details {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .score {
+                order: -1;
+                margin: 15px 0;
+            }
+            
+            .match-info {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>PLANET <span>COLONY</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#entertainment">Entertainment</a></li>
+                    <li><a href="../index.html#news">News</a></li>
+                    <li><a href="../index.html#technology">Technology</a></li>
+                    <li><a href="../index.html#community">Community</a></li>
+                    <li><a href="#" class="active">Sports</a></li>
+                </ul>
+                
+                <div class="portfolio-menu">
+                    <a href="#" class="portfolio-btn">
+                        Portfolio <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="portfolio-dropdown">
+                        <h3>Our Projects</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                            <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                            <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                            <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button class="close-menu"><i class="fas fa-times"></i></button>
+            <ul>
+                <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="../index.html#entertainment"><i class="fas fa-film"></i> Entertainment</a></li>
+                <li><a href="../index.html#news"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="../index.html#technology"><i class="fas fa-microchip"></i> Technology</a></li>
+                <li><a href="../index.html#community"><i class="fas fa-users"></i> Community</a></li>
+                <li><a href="#" class="active"><i class="fas fa-running"></i> Sports</a></li>
+                
+                <li class="menu-title">Portfolio</li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Gaming Hub</a></li>
+                <li><a href="#"><i class="fas fa-microphone-alt"></i> Podcast Network</a></li>
+                <li><a href="#"><i class="fas fa-video"></i> Video Streaming</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Dev Tools</a></li>
+                <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                <li><a href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <!-- Sports Hero Section -->
+    <section class="sports-hero">
+        <div class="container sports-hero-content">
+            <h1>Sports Universe</h1>
+            <p>Your ultimate destination for live scores, breaking sports news, in-depth analysis, and exclusive interviews with top athletes.</p>
+            <a href="#live-scores" class="btn">Live Scores</a>
+        </div>
+    </section>
+
+    <!-- Sports Main Content -->
+    <section class="section">
+        <div class="container">
+            <!-- Sports Tabs -->
+            <div class="sports-tabs">
+                <div class="sports-tab active" data-tab="football">Football</div>
+                <div class="sports-tab" data-tab="basketball">Basketball</div>
+                <div class="sports-tab" data-tab="tennis">Tennis</div>
+                <div class="sports-tab" data-tab="olympics">Olympics</div>
+                <div class="sports-tab" data-tab="esports">eSports</div>
+            </div>
+            
+            <!-- Football Content -->
+            <div class="sports-content active" id="football">
+                <!-- Featured Match -->
+                <div class="featured-match" id="live-scores">
+                    <div class="match-header">
+                        <h3>Champions League Quarterfinals</h3>
+                        <div class="match-status">Live</div>
+                    </div>
+                    <div class="match-details">
+                        <div class="team">
+                            <img src="https://via.placeholder.com/80x80.png?text=Man+City" alt="Manchester City" class="team-logo">
+                            <div class="team-name">Manchester City</div>
+                        </div>
+                        <div class="score">2 - 1</div>
+                        <div class="team">
+                            <img src="https://via.placeholder.com/80x80.png?text=Real+Madrid" alt="Real Madrid" class="team-logo">
+                            <div class="team-name">Real Madrid</div>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-time">72' Minute</div>
+                            <div class="match-venue">Etihad Stadium, Manchester</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Football News -->
+                <h3 class="section-subtitle">Latest Football News</h3>
+                <div class="sports-news-grid">
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Football News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Transfers</span>
+                            <h3>Haaland Signs Contract Extension With Man City</h3>
+                            <p>The Norwegian striker has committed his future to the Premier League champions with a new five-year deal.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 hours ago</span>
+                                <span><i class="far fa-comment"></i> 142</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Football News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Analysis</span>
+                            <h3>Tactical Breakdown: How Arsenal Became Title Contenders</h3>
+                            <p>Examining Mikel Arteta's tactical evolution that has transformed Arsenal into genuine Premier League title challengers.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 5 hours ago</span>
+                                <span><i class="far fa-comment"></i> 87</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Football News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Injury News</span>
+                            <h3>PSG Confirm Neymar Out for Season With Ankle Injury</h3>
+                            <p>The Brazilian superstar suffered the injury during Sunday's Ligue 1 match and will undergo surgery.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 8 hours ago</span>
+                                <span><i class="far fa-comment"></i> 203</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- League Standings -->
+                <h3 class="section-subtitle">Premier League Standings</h3>
+                <table class="standings-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Team</th>
+                            <th>P</th>
+                            <th>W</th>
+                            <th>D</th>
+                            <th>L</th>
+                            <th>GD</th>
+                            <th>Pts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="team-cell"><img src="https://via.placeholder.com/30x30.png?text=ARS" alt="Arsenal"> Arsenal</td>
+                            <td>30</td>
+                            <td>23</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>+45</td>
+                            <td class="highlight">73</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="team-cell"><img src="https://via.placeholder.com/30x30.png?text=MCI" alt="Man City"> Man City</td>
+                            <td>29</td>
+                            <td>21</td>
+                            <td>4</td>
+                            <td>4</td>
+                            <td>+52</td>
+                            <td class="highlight">67</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="team-cell"><img src="https://via.placeholder.com/30x30.png?text=MUN" alt="Man Utd"> Man Utd</td>
+                            <td>29</td>
+                            <td>17</td>
+                            <td>7</td>
+                            <td>5</td>
+                            <td>+18</td>
+                            <td>58</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td class="team-cell"><img src="https://via.placeholder.com/30x30.png?text=TOT" alt="Tottenham"> Tottenham</td>
+                            <td>30</td>
+                            <td>16</td>
+                            <td>5</td>
+                            <td>9</td>
+                            <td>+12</td>
+                            <td>53</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td class="team-cell"><img src="https://via.placeholder.com/30x30.png?text=NEW" alt="Newcastle"> Newcastle</td>
+                            <td>28</td>
+                            <td>14</td>
+                            <td>11</td>
+                            <td>3</td>
+                            <td>+25</td>
+                            <td>53</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Video Highlights -->
+                <h3 class="section-subtitle">Video Highlights</h3>
+                <div class="video-highlights">
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Video Thumbnail">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-info">
+                                <h3>All Goals: Liverpool 4-0 Manchester United</h3>
+                                <div class="video-meta">
+                                    <span>Premier League</span>
+                                    <span>5:32</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="video-card">
+                            <div class="video-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Video Thumbnail">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-info">
+                                <h3>Mbappe Hat-trick Against Bayern Munich</h3>
+                                <div class="video-meta">
+                                    <span>Champions League</span>
+                                    <span>4:15</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="video-card">
+                            <div class="video-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Video Thumbnail">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-info">
+                                <h3>Top 10 Goals of the Month - March 2023</h3>
+                                <div class="video-meta">
+                                    <span>Compilation</span>
+                                    <span>8:42</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Basketball Content -->
+            <div class="sports-content" id="basketball">
+                <!-- Featured Match -->
+                <div class="featured-match">
+                    <div class="match-header">
+                        <h3>NBA Regular Season</h3>
+                        <div class="match-status upcoming">Upcoming</div>
+                    </div>
+                    <div class="match-details">
+                        <div class="team">
+                            <img src="https://via.placeholder.com/80x80.png?text=LAL" alt="LA Lakers" class="team-logo">
+                            <div class="team-name">LA Lakers</div>
+                        </div>
+                        <div class="score">- : -</div>
+                        <div class="team">
+                            <img src="https://via.placeholder.com/80x80.png?text=BKN" alt="Brooklyn Nets" class="team-logo">
+                            <div class="team-name">Brooklyn Nets</div>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-time">Today, 7:30 PM EST</div>
+                            <div class="match-venue">Staples Center, Los Angeles</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Basketball News -->
+                <h3 class="section-subtitle">Latest Basketball News</h3>
+                <div class="sports-news-grid">
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Basketball News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">NBA</span>
+                            <h3>Jokic Records Triple-Double in Nuggets Win Over Bucks</h3>
+                            <p>The Serbian center dominated with 32 points, 12 rebounds and 10 assists in a potential Finals preview.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 3 hours ago</span>
+                                <span><i class="far fa-comment"></i> 76</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Basketball News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Analysis</span>
+                            <h3>How the Celtics Became the NBA's Best Defense</h3>
+                            <p>Breaking down the tactical adjustments that have made Boston nearly impossible to score against.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 7 hours ago</span>
+                                <span><i class="far fa-comment"></i> 42</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1474224017046-182ece80b099?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Basketball News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Injury News</span>
+                            <h3>Zion Williamson Out Indefinitely With Hamstring Strain</h3>
+                            <p>The Pelicans star suffered the injury during Monday's practice, dealing a blow to New Orleans' playoff hopes.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 10 hours ago</span>
+                                <span><i class="far fa-comment"></i> 115</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tennis Content -->
+            <div class="sports-content" id="tennis">
+                <!-- Featured Match -->
+                <div class="featured-match">
+                    <div class="match-header">
+                        <h3>Australian Open Final</h3>
+                        <div class="match-status result">Result</div>
+                    </div>
+                    <div class="match-details">
+                        <div class="team">
+                            <img src="https://via.placeholder.com/80x80.png?text=DJK" alt="Djokovic" class="team-logo">
+                            <div class="team-name">Novak Djokovic</div>
+                        </div>
+                        <div class="score">6-4, 3-6, 7-6</div>
+                        <div class="team">
+                            <img src="https://via.placeholder.com/80x80.png?text=NDL" alt="Nadal" class="team-logo">
+                            <div class="team-name">Rafael Nadal</div>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-time">January 29, 2023</div>
+                            <div class="match-venue">Rod Laver Arena, Melbourne</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tennis News -->
+                <h3 class="section-subtitle">Latest Tennis News</h3>
+                <div class="sports-news-grid">
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Tennis News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Grand Slam</span>
+                            <h3>Djokovic Wins Record 10th Australian Open Title</h3>
+                            <p>The Serbian superstar overcame Rafael Nadal in a thrilling final to claim his 22nd Grand Slam trophy.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 1 day ago</span>
+                                <span><i class="far fa-comment"></i> 231</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Tennis News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">WTA</span>
+                            <h3>Swiatek Dominates to Win French Open</h3>
+                            <p>The Polish star continued her incredible run with a straight-sets victory in the Roland Garros final.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 days ago</span>
+                                <span><i class="far fa-comment"></i> 98</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sports-news-card">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Tennis News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">ATP</span>
+                            <h3>Next Gen Stars to Watch in 2023</h3>
+                            <p>Meet the young players poised to challenge the established order in men's tennis this season.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 3 days ago</span>
+                                <span><i class="far fa-comment"></i> 64</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="section-title">Sports Newsletter</h2>
+            <p>Subscribe to get daily sports updates, match highlights, and exclusive interviews delivered to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Planet Colony</h3>
+                    <p>Exploring the digital universe and bringing you the latest in entertainment, news, technology, and sports since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Sports</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Football</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Basketball</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Tennis</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Olympics</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> eSports</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> All Sports</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="../index.html#entertainment"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                        <li><a href="../index.html#news"><i class="fas fa-chevron-right"></i> News</a></li>
+                        <li><a href="../index.html#technology"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                        <li><a href="../index.html#community"><i class="fas fa-chevron-right"></i> Community</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Digital Avenue, Tech District</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> sports@planetcolony.com</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Live Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Planet Colony. All rights reserved. Designed with <i class="fas fa-heart" style="color:var(--accent-green)"></i> for the digital universe.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Sports Tab Functionality
+        const sportsTabs = document.querySelectorAll('.sports-tab');
+        const sportsContents = document.querySelectorAll('.sports-content');
+        
+        sportsTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                sportsTabs.forEach(t => t.classList.remove('active'));
+                sportsContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const emailInput = newsletterForm.querySelector('input[type="email"]');
+                if (emailInput.value) {
+                    alert(`Thank you for subscribing to our sports newsletter with ${emailInput.value}! You'll receive our next update soon.`);
+                    emailInput.value = '';
+                }
+            });
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Sticky header effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('sticky', window.scrollY > 100);
+        });
+    </script>
+</body>
+</html>

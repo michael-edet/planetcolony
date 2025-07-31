@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Signup | Planet Colony Music Promotion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-black: #121212;
+            --accent-green: #1db954;
+            --light-green: #1ed760;
+            --dark-green: #15803d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .signup-form {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-black);
+            font-size: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+        
+        .plan-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .plan-option {
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .plan-option:hover {
+            border-color: var(--accent-green);
+        }
+        
+        .plan-option.selected {
+            border-color: var(--accent-green);
+            background-color: rgba(29, 185, 84, 0.05);
+        }
+        
+        .plan-option input {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .plan-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .plan-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+        
+        .plan-features {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .plan-features li {
+            margin-bottom: 5px;
+            list-style-type: none;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .plan-features li:before {
+            content: "•";
+            color: var(--accent-green);
+            position: absolute;
+            left: 0;
+        }
+        
+        .price-display {
+            text-align: center;
+            margin: 25px 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .price-amount {
+            color: var(--accent-green);
+            font-size: 1.8rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+            margin-top: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .form-footer a {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .signup-form {
+                padding: 25px;
+            }
+            
+            .plan-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-form">
+            <h1 class="form-title">Join Planet Colony Music Promotion</h1>
+            
+            <form id="artistSignupForm">
+                <div class="form-group">
+                    <label for="artistName" class="form-label">Artist/Band Name</label>
+                    <input type="text" id="artistName" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Create Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Select Promotion Plan</label>
+                    <div class="plan-options" id="planOptions">
+                        <!-- Basic Plan -->
+                        <label class="plan-option">
+                            <input type="radio" name="plan" value="basic" data-price="4.99">
+                            <div class="plan-name">Basic Plan</div>
+                            <div class="plan-price">$4.99/month</div>
+                            <ul class="plan-features">
+                                <li>50+ platforms</li>
+                                <li>10 releases/year</li>
+                                <li>Basic analytics</li>
+                                <li>85% royalties</li>
+                            </ul>
+                        </label>
+                        
+                        <!-- Standard Plan -->
+                        <label class="plan-option selected">
+                            <input type="radio" name="plan" value="standard" data-price="9.99" checked>
+                            <div class="plan-name">Standard Plan</div>
+                            <div class="plan-price">$9.99/month</div>
+                            <ul class="plan-features">
+                                <li>100+ platforms</li>
+                                <li>Unlimited releases</li>
+                                <li>Advanced analytics</li>
+                                <li>90% royalties</li>
+                            </ul>
+                        </label>
+                        
+                        <!-- Pro Plan -->
+                        <label class="plan-option">
+                            <input type="radio" name="plan" value="pro" data-price="19.99">
+                            <div class="plan-name">Pro Plan</div>
+                            <div class="plan-price">$19.99/month</div>
+                            <ul class="plan-features">
+                                <li>150+ platforms</li>
+                                <li>Premium releases</li>
+                                <li>Pro analytics</li>
+                                <li>95% royalties</li>
+                            </ul>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="price-display">
+                    Selected Plan: <span id="selectedPlanName">Standard</span> - 
+                    <span class="price-amount" id="selectedPlanPrice">$9.99</span>/month
+                </div>
+                
+                <div class="form-group">
+                    <label for="paymentMethod" class="form-label">Payment Method</label>
+                    <select id="paymentMethod" class="form-control" required>
+                        <option value="">Select payment method</option>
+                        <option value="credit">Credit/Debit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="crypto">Cryptocurrency</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="termsAgree" required>
+                        I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn">Get Started Now</button>
+                <a href="plans.html" class="btn btn-outline">View Plan Details</a>
+                
+                <div class="form-footer">
+                    Already have an account? <a href="login.html">Sign in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Plan selection functionality
+            const planOptions = document.querySelectorAll('.plan-option');
+            const selectedPlanName = document.getElementById('selectedPlanName');
+            const selectedPlanPrice = document.getElementById('selectedPlanPrice');
+            
+            planOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    planOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Get the radio input inside this option
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Update displayed price and plan name
+                    selectedPlanName.textContent = this.querySelector('.plan-name').textContent;
+                    selectedPlanPrice.textContent = '$' + radio.getAttribute('data-price');
+                });
+            });
+            
+            // Form submission
+            const signupForm = document.getElementById('artistSignupForm');
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const artistName = document.getElementById('artistName').value;
+                const email = document.getElementById('email').value;
+                const plan = document.querySelector('input[name="plan"]:checked').value;
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                
+                // In a real implementation, you would send this data to your server
+                console.log('Form submitted:', {
+                    artistName,
+                    email,
+                    plan,
+                    paymentMethod
+                });
+                
+                // Show success message (in a real app, you'd redirect to payment or dashboard)
+                alert(`Thank you, ${artistName}! Your ${plan} plan signup is being processed.`);
+                
+                // Reset form
+                signupForm.reset();
+                
+                // Reset plan selection to default
+                planOptions.forEach(opt => opt.classList.remove('selected'));
+                document.querySelector('.plan-option:nth-child(2)').classList.add('selected');
+                selectedPlanName.textContent = 'Standard';
+                selectedPlanPrice.textContent = '$9.99';
+            });
+            
+            // Initialize with default selected plan
+            const defaultSelected = document.querySelector('.plan-option.selected');
+            if (defaultSelected) {
+                const radio = defaultSelected.querySelector('input[type="radio"]');
+                selectedPlanName.textContent = defaultSelected.querySelector('.plan-name').textContent;
+                selectedPlanPrice.textContent = '$' + radio.getAttribute('data-price');
+            }
+        });
+    </script>
+</body>
+</html>

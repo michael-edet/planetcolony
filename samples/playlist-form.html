@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+  .submission-form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  .submission-form {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .submission-form h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--primary-black);
+    font-size: 1.5rem;
+  }
+  
+  .submission-form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .submission-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+  
+  .submission-form input,
+  .submission-form select,
+  .submission-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--medium-gray);
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  
+  .submission-form input:focus,
+  .submission-form select:focus,
+  .submission-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-green);
+  }
+  
+  .submission-form textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .submission-form .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 576px) {
+    .submission-form {
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <!-- Add this where you want the submission form to appear -->
+<div class="submission-form-container">
+  <div class="submission-form">
+    <h3>Submit Your Music for Playlist Consideration</h3>
+    <form id="musicSubmissionForm">
+      <div class="form-group">
+        <label for="artistName">Artist/Band Name</label>
+        <input type="text" id="artistName" name="artistName" required placeholder="Your official artist name">
+      </div>
+      
+      <div class="form-group">
+        <label for="trackTitle">Track Title</label>
+        <input type="text" id="trackTitle" name="trackTitle" required placeholder="Name of the track you're submitting">
+      </div>
+      
+      <div class="form-group">
+        <label for="trackLink">Streaming Link</label>
+        <input type="url" id="trackLink" name="trackLink" required placeholder="Spotify, Apple Music, or YouTube link">
+      </div>
+      
+      <div class="form-group">
+        <label for="genre">Genre</label>
+        <select id="genre" name="genre" required>
+          <option value="">Select genre</option>
+          <option value="pop">Pop</option>
+          <option value="hiphop">Hip-Hop/Rap</option>
+          <option value="electronic">Electronic/Dance</option>
+          <option value="rock">Rock</option>
+          <option value="r&b">R&B/Soul</option>
+          <option value="alternative">Alternative/Indie</option>
+          <option value="lofi">Lo-Fi/Chill</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="Where we'll send feedback">
+      </div>
+      
+      <div class="form-group">
+        <label for="message">Additional Info (Optional)</label>
+        <textarea id="message" name="message" placeholder="Tell us about your track, influences, or target audience"></textarea>
+      </div>
+      
+      <button type="submit" class="btn">Submit for Consideration</button>
+    </form>
+  </div>
+</div>
+
+
+
+<script>
+  document.getElementById('musicSubmissionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const formData = {
+      artistName: document.getElementById('artistName').value,
+      trackTitle: document.getElementById('trackTitle').value,
+      trackLink: document.getElementById('trackLink').value,
+      genre: document.getElementById('genre').value,
+      email: document.getElementById('email').value,
+      message: document.getElementById('message').value
+    };
+    
+    // In a real implementation, you would send this data to your server
+    console.log('Music submission:', formData);
+    
+    // Show success message
+    alert(`Thank you, ${formData.artistName}! Your track "${formData.trackTitle}" has been submitted for review. We'll contact you at ${formData.email} with feedback.`);
+    
+    // Reset form
+    this.reset();
+  });
+</script>
+</body>
+
+</html>
